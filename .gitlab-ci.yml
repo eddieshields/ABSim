@@ -17,7 +17,8 @@ build:
     - cd ..
   artifacts:
     paths:
-      - build/ABSim
+      - build/ABSimRun
+      - build/tests/Test
 
 test:
   stage: test
