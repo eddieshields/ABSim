@@ -1,3 +1,7 @@
+image: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7
+  tags:
+    - cvmfs
+
 stages:
   - build
   - test
@@ -5,9 +9,6 @@ stages:
 
 build:
   stage: build
-  image: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7
-  tags:
-    - cvmfs
   script:
     - source /cvmfs/sft.cern.ch/lcg/views/setupViews.sh LCG_97python3 x86_64-centos7-clang8-opt
     - mkdir build
@@ -22,18 +23,12 @@ build:
 
 test:
   stage: test
-  image: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7
-  tags:
-    - cvmfs
   script:
     - source /cvmfs/sft.cern.ch/lcg/views/setupViews.sh LCG_97python3 x86_64-centos7-clang8-opt
     - ./build/tests/Test
 
 run:
   stage: run
-  image: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7
-  tags:
-    - cvmfs
   script:
     - source /cvmfs/sft.cern.ch/lcg/views/setupViews.sh LCG_97python3 x86_64-centos7-clang8-opt
     - ./build/ABSimRun
