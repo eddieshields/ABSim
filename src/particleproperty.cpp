@@ -32,7 +32,7 @@ ParticleProperty<T> ParticleProperty<T>::operator+(const ParticleProperty<T>& rh
   prop.gen_ = gen_ + rhs.gen_;
   prop.reco_ = reco_ + rhs.reco_;
   return prop;
-};
+}
 
 template <typename T>
 ParticleProperty<T> ParticleProperty<T>::operator-(const ParticleProperty<T>& rhs)
@@ -41,7 +41,7 @@ ParticleProperty<T> ParticleProperty<T>::operator-(const ParticleProperty<T>& rh
   prop.gen_ = gen_ - rhs.gen_;
   prop.reco_ = reco_ - rhs.reco_;
   return prop;
-};
+}
 
 template <typename T>
 ParticleProperty<T> ParticleProperty<T>::operator*(const ParticleProperty<T>& rhs)
@@ -50,7 +50,7 @@ ParticleProperty<T> ParticleProperty<T>::operator*(const ParticleProperty<T>& rh
   prop.gen_ = gen_ * rhs.gen_;
   prop.reco_ = reco_ * rhs.reco_;
   return prop;
-};
+}
 
 template <typename T>
 ParticleProperty<T> ParticleProperty<T>::operator/(const ParticleProperty<T>& rhs)
@@ -59,13 +59,4 @@ ParticleProperty<T> ParticleProperty<T>::operator/(const ParticleProperty<T>& rh
   prop.gen_ = gen_ / rhs.gen_;
   prop.reco_ = reco_ / rhs.reco_;
   return prop;
-};
-
-template <>
-ParticleProperty<real_t> ParticleProperty<real_t>::operator+(const ParticleProperty<real_t>& rhs)
-{
-  ParticleProperty<real_t> prop;
-  prop.gen_ = gen_ + rhs.gen_;
-  prop.reco_ = reco_ + rhs.reco_;
-  return prop;
-};
+}
