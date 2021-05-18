@@ -28,10 +28,11 @@ find_package(Threads REQUIRED)
 
 ##--- Define the header and src directories
 file(GLOB_RECURSE HEADERS include/*.h)
-file(GLOB_RECURSE SOURCES src/*.cpp backend/src/*.cpp)
+file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp ${CMAKE_SOURCE_DIR}/backend/src/*.cpp)
 
-##--- Generate library with ROOT dictionary
+##--- Generate library 
 add_library(${PACKAGE} SHARED ${SOURCES})
+target_include_directories(${PACKAGE} PUBLIC include)
 
 ##--- Link libraries
 target_link_libraries(${PACKAGE} ${CMAKE_THREAD_LIBS_INIT})

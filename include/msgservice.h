@@ -62,7 +62,7 @@ inline std::string trimmedString( std::string thing, const unsigned int& length 
 
 /// @ingroup msgService macro INFO
 /// Used for printing information messages, and will always be printed. 
-#define INFO( X )                                                                                                      \
+#define ABSIM_INFO( X )                                                                                                      \
   std::cout << "\033[2;34m" << std::left << std::setw( FCNNAMELENGTH ) << trimmedString( __PRETTY_FUNCTION__ )         \
 << "  INFO         "                                                                                       \
 << "\033[0m" << X << std::endl
