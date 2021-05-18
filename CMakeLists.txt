@@ -8,7 +8,7 @@ option(DEBUG "Debug" ON)
 option(RELEASE "Release" OFF)
 
 if (DEBUG)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -Wpedantic")
 endif()
 
 if (RELEASE)

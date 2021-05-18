@@ -12,10 +12,8 @@ namespace ABSIM
   class Vertex
   {
   private:
-    union {
-      __m128 intr_;
-      struct { real_t x_, y_, z_; };
-    };
+    real_t x_, y_, z_;
+
   public:
     Vertex() :
       x_( -1 ),
@@ -30,30 +28,31 @@ namespace ABSIM
     ~Vertex() {}
 
     // Copy and Move constructors.
-    Vertex(const Vertex& rhs)
-    {
-      intr_ = rhs.intr_;
-    }
+    Vertex(const Vertex& rhs) :
+      x_( rhs.x_ ),
+      y_( rhs.y_ ),
+      z_( rhs.z_ )
+    {}
     Vertex& operator=(const Vertex& rhs)
     {
-      intr_ = rhs.intr_;
+      x_ = rhs.x_;
+      y_ = rhs.y_;
+      z_ = rhs.z_;
       return *this;
     }
 
     // - operator is only one with a physical meaning.
-    real_t operator-(const Vertex& rhs)
+    inline real_t operator-(const Vertex& rhs)
     {
-      const int dp = 1;
-      //_mm_dp_ps( intr_ , rhs.intr_ , dp);
-      return sqrtf( dp );
+      real_t d = ( x_ - rhs.x_ ) + ( y_ - rhs.y_ ) + ( z_ - rhs.z_ );
+      return sqrtf( d );
     }
 
     // Flight distance between two vertices.
-    real_t FD(const Vertex& rhs)
+    inline real_t FD(const Vertex& rhs)
     {
-      const int dp = 1;
-      //_mm_dp_ps( intr_ , rhs.intr_ , dp);
-      return sqrtf( dp );
+      real_t d = ( x_ - rhs.x_ ) + ( y_ - rhs.y_ ) + ( z_ - rhs.z_ );
+      return sqrtf( d );
     }
   };
 
