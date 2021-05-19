@@ -12,16 +12,19 @@ namespace ABSIM {
 
   class Event
   {
-  public:
+  private:
+    int       n_;
     Particle* particles_;
     Decay*    decays_;
 
-
+  public:
     static std::string NAME() { return "Event"; }
 
     Event() = default;
     Event(const DecayDescriptor& descriptor);
     ~Event() {}
+
+    void reset();
 
     void* operator new (size_t size)
     {

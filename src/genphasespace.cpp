@@ -21,7 +21,7 @@ GenPhaseSpace::GenPhaseSpace(const GenPhaseSpace& gen)
   beta_[0] = gen.beta_[0];
   beta_[1] = gen.beta_[1];
   beta_[2] = gen.beta_[2];
-  for (unsigned int i = 0; i < n_; i++) {
+  for (int i = 0; i < n_; i++) {
     mass_[i] = gen.mass_[i];
     decProd_[i] = gen.decProd_[i];
   }

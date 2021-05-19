@@ -15,7 +15,7 @@ if (RELEASE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -march=native")
 endif()
 
-set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_STANDARD 17)
 
 include_directories(include/)
 include_directories(backend/include/)
@@ -39,7 +39,7 @@ file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp ${CMAKE_SOURCE_DIR}/back
 
 ##--- Generate library 
 add_library(${PACKAGE} SHARED ${SOURCES})
-target_include_directories(${PACKAGE} PUBLIC include)
+target_include_directories(${PACKAGE} PUBLIC include backend/include)
 
 ##--- Link libraries
 target_link_libraries(${PACKAGE} ${ROOT_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})

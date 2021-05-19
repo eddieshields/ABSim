@@ -149,29 +149,29 @@ namespace ABSIM {
     return (*this)(i);
   }
 
-  inline real_t FourVector::x()  const { return p_.x_; };
+  inline real_t FourVector::x()  const { return p_.x_; }
 
-  inline real_t FourVector::y()  const { return p_.y_; };
+  inline real_t FourVector::y()  const { return p_.y_; }
 
-  inline real_t FourVector::z()  const { return p_.z_; };
+  inline real_t FourVector::z()  const { return p_.z_; }
 
-  inline real_t FourVector::t()  const { return e_; };
+  inline real_t FourVector::t()  const { return e_; }
 
-  inline real_t FourVector::X()  const { return p_.x_; };
+  inline real_t FourVector::X()  const { return p_.x_; }
 
-  inline real_t FourVector::Y()  const { return p_.y_; };
+  inline real_t FourVector::Y()  const { return p_.y_; }
 
-  inline real_t FourVector::Z()  const { return p_.z_; };
+  inline real_t FourVector::Z()  const { return p_.z_; }
 
-  inline real_t FourVector::T()  const { return e_; };
+  inline real_t FourVector::T()  const { return e_; }
 
-  inline real_t FourVector::Px() const { return p_.x_; };
+  inline real_t FourVector::Px() const { return p_.x_; }
 
-  inline real_t FourVector::Py() const { return p_.y_; };
+  inline real_t FourVector::Py() const { return p_.y_; }
 
-  inline real_t FourVector::Pz() const { return p_.z_; };
+  inline real_t FourVector::Pz() const { return p_.z_; }
 
-  inline real_t FourVector::E()  const { return e_; };
+  inline real_t FourVector::E()  const { return e_; }
 
   inline void FourVector::SetX(const real_t& x) { p_.x_ = x; }
 

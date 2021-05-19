@@ -5,6 +5,9 @@
 #include "decaydescriptor.h"
 #include "memorymanager.h"
 #include "msgservice.h"
+#include "threadpool.h"
+#include "backend.h"
+#include "clock.h"
 
 namespace ABSIM {
 
@@ -19,6 +22,7 @@ namespace ABSIM {
   private:
     ABSimConfiguration configuration_;
     DecayDescriptor    descriptor_;
+    ThreadPool         threadpool_;
 
     void allocateMemory();
 
@@ -32,6 +36,7 @@ namespace ABSIM {
     ABSimConfiguration& operator()() { return configuration_; }
 
     void run();
+    void generate();
   };
 
 }  // namespace ABSIM

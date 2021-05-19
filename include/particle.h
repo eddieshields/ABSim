@@ -77,13 +77,20 @@ namespace ABSIM {
     {
       name_ = rhs.name;
       mass_ = rhs.mass;
-      //time_ = rhs.time;
-      //pid_ = rhs.pid;
-      //q_ = rhs.q;
+      time_ = rhs.time;
+      pid_ = rhs.pid;
+      q_ = rhs.q;
       return *this;
     }
 
     const std::string name() const { return name_; };
+
+    void reset()
+    {
+      momentum_ = FourVector();
+      org_vertex_ = Vertex();
+      end_vertex_ = Vertex();
+    }
 
 
     real_t FD() { return end_vertex_.generated() - org_vertex_.generated(); }

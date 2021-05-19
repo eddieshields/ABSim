@@ -14,7 +14,8 @@ ThreadPool::ThreadPool(size_t threads) :
     workers_.emplace_back( Worker( this , id_ ) );
     ++id_;
   }
-  gridDim.x = nthreads_;
+
+  //blockDim.x = nthreads_;
 }
 
 ThreadPool::~ThreadPool()

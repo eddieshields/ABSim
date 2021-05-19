@@ -20,6 +20,7 @@ namespace ABSIM {
     std::map<std::string,SubDecayDescriptor*> decays_;
     std::unordered_map<std::string,int>       pairs_;
 
+    inline int                       size() const             { return static_cast<int>(particles_.size()); }
     inline std::vector<std::string>& particles()              { return particles_; }
     inline int&                      index(std::string& name) { return pairs_[name]; }
 
@@ -72,7 +73,6 @@ namespace ABSIM {
 
     int nparticles() const { return particles_.size(); }
     int ndecays()    const { return subdecays_.size(); }
-    int maxparticles() const;
 
     void Print() const;
 
