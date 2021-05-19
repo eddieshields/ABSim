@@ -54,10 +54,10 @@ namespace ABSIM {
       org_vertex_(),
       end_vertex_(),
       name_( info.name ),
-      mass_( info.mass_ ),
+      mass_( info.mass ),
       time_( info.time ),
       pid_( info.pid ),
-      q_( info.q_ )
+      q_( info.q )
     {}
     ~Particle() {}
 
@@ -71,6 +71,15 @@ namespace ABSIM {
       time_ = rhs.time_;
       pid_ = rhs.pid_;
       q_ = rhs.q_;
+      return *this;
+    }
+    Particle& operator=(const BasicParticleInfo& rhs)
+    {
+      name_ = rhs.name;
+      mass_ = rhs.mass;
+      //time_ = rhs.time;
+      //pid_ = rhs.pid;
+      //q_ = rhs.q;
       return *this;
     }
 

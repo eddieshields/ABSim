@@ -9,6 +9,7 @@
 #include <sstream>
 #include <map>
 #include <unordered_map>
+#include <algorithm>
 
 namespace ABSIM {
 
@@ -17,6 +18,10 @@ namespace ABSIM {
     SubDecayDescriptor*                       from_;
     std::vector<std::string>                  particles_;
     std::map<std::string,SubDecayDescriptor*> decays_;
+    std::unordered_map<std::string,int>       pairs_;
+
+    inline std::vector<std::string>& particles()              { return particles_; }
+    inline int&                      index(std::string& name) { return pairs_[name]; }
 
     friend std::ostream& operator<<(std::ostream& os, const SubDecayDescriptor& subdecay)
     {
@@ -46,6 +51,7 @@ namespace ABSIM {
     bool endDecay(std::string entry);
     bool isDecaySign(std::string entry);
     void getInfo(std::string entry);
+    int find(std::string entry);
 
     // Print Descriptor.
     std::string print_subdecay(std::string& out, SubDecayDescriptor* subdecay) const;
@@ -59,6 +65,10 @@ namespace ABSIM {
       decodeDecay(decay_);
     }
     ~DecayDescriptor() {}
+
+    inline std::vector<std::string>                          particles() const { return particles_; }
+    inline std::vector<SubDecayDescriptor*>                  decays()    const { return subdecays_; }
+    inline std::unordered_map<std::string,BasicParticleInfo> info()      const { return infos_; }
 
     int nparticles() const { return particles_.size(); }
     int ndecays()    const { return subdecays_.size(); }

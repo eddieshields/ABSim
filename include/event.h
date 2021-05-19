@@ -3,6 +3,7 @@
 
 #include "particle.h"
 #include "decay.h"
+#include "decaydescriptor.h"
 #include "memorymanager.h"
 
 #include <vector>
@@ -17,6 +18,10 @@ namespace ABSIM {
 
 
     static std::string NAME() { return "Event"; }
+
+    Event() = default;
+    Event(const DecayDescriptor& descriptor);
+    ~Event() {}
 
     void* operator new (size_t size)
     {

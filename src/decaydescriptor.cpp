@@ -27,6 +27,12 @@ bool DecayDescriptor::isDecaySign(std::string entry)
   return false;
 }
 
+int DecayDescriptor::find(std::string entry)
+{
+  auto it = std::find(particles_.begin(),particles_.end(),entry);
+  return it - particles_.begin();
+}
+
 void DecayDescriptor::decodeDecay(std::string decay)
 {
   SubDecayDescriptor* subdecay = nullptr;
@@ -41,8 +47,9 @@ void DecayDescriptor::decodeDecay(std::string decay)
       subdecay = subdecays_.back();
       subdecay->from_ = nullptr;
       subdecay->particles_.push_back( entry );
-      decay_particle = false;
+      subdecay->index( entry ) = find( entry );
       getInfo( entry );
+      decay_particle = false;
       continue;
     }
 
@@ -76,6 +83,7 @@ void DecayDescriptor::decodeDecay(std::string decay)
     }
 
     subdecay->particles_.push_back( entry );
+    subdecay->index( entry ) = find( entry );
     subdecay->decays_.insert( std::pair<std::string,SubDecayDescriptor*>(particles_.back() , nullptr) );
   }
   return;

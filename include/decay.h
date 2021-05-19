@@ -21,6 +21,7 @@ namespace ABSIM {
    * @date 11/05/2021
    */
   class Decay {
+  friend class Event;
   private:
     Particle* mother_;
     Particle* daughters_[MAXP_];

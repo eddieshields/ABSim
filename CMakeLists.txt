@@ -12,7 +12,7 @@ if (DEBUG)
 endif()
 
 if (RELEASE)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -march=native -flto")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -march=native")
 endif()
 
 set (CMAKE_CXX_STANDARD 11)

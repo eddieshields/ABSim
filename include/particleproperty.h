@@ -38,7 +38,12 @@ namespace ABSIM {
     // Move constructor.
     ParticleProperty<T>& operator=(const ParticleProperty<T>& rhs);
     ParticleProperty<T>& operator=(const std::tuple<T,T>& rhs);
-    ParticleProperty<T>& operator=(const T& rhs);
+    ParticleProperty<T>& operator=(const T& rhs)
+    {
+      gen_ = rhs;
+      reco_ = rhs;
+      return *this;
+    }
 
     // Operators.
     ParticleProperty<T> operator+(const ParticleProperty<T>& rhs);

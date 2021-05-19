@@ -15,19 +15,25 @@ namespace ABSIM {
     static std::atomic<int> head_;
     static int              tail_;
 
+    static constexpr size_t size_ = sizeof(T);
+
   public:
     static void request(int n)
     {
       ABSIM_INFO("Requested to allocate memory for " << n << " " << T::NAME() << "s");
       pool_ = reinterpret_cast<T*>( new char[sizeof(T)*n] );
+      head_ = 0;
       tail_ = n;
     }
 
     inline static void* allocate(size_t size)
     {
-      if ( head_ + size >= tail_ ) FATAL("Not evenough memory to allocate more " << T::NAME() << "s");
+      int n = size / size_;
+      if ( head_ + n > tail_ ) {
+        FATAL("Not enough memory to allocate more " << T::NAME() << "s");
+      }
 
-      int head = head_.fetch_add( size );
+      int head = head_.fetch_add( n );
       return pool_ + head;
     }
 
