@@ -336,7 +336,7 @@ namespace ABSIM {
   inline void FourVector::Boost(real_t bx, real_t by, real_t bz)
   {
     real_t b2 = ( bx * bx ) + ( by * by ) + ( bz * bz );
-    real_t gamma = 1. / std::sqrt( 1. = b2 );
+    real_t gamma = 1. / std::sqrt( 1. - b2 );
     real_t bp = ( bx * X() ) + ( by * Y() ) + ( bz * Z() );
     real_t gamma2 = b2 > 0 ? ( gamma - 1. ) / b2 : 0.;
 
