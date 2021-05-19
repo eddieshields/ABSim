@@ -56,6 +56,10 @@ namespace ABSIM {
     }
     ~DecayDescriptor() {}
 
+    int nparticles() const { return particles_.size(); }
+    int ndecays()    const { return subdecays_.size(); }
+    int maxparticles() const;
+
     void Print() const;
 
     // I/O operators.

@@ -71,15 +71,15 @@ namespace ABSIM {
     inline real_t CosTheta() const;
   };
 
-  Vector3::Vector3(real_t x, real_t y, real_t z) :
+  inline Vector3::Vector3(real_t x, real_t y, real_t z) :
     x_( x ), y_( y ), z_( z )
   {}
 
-  Vector3::Vector3(real_t* x0) :
+  inline Vector3::Vector3(real_t* x0) :
     x_( x0[0] ), y_( x0[1] ), z_( x0[2] )
   {}
 
-  Vector3::Vector3(const Vector3& v) :
+  inline Vector3::Vector3(const Vector3& v) :
     x_( v.x_ ), y_( v.y_ ), z_( v.z_ )
   {}
 

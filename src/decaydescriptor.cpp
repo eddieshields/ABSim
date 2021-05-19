@@ -107,3 +107,12 @@ void DecayDescriptor::Print() const
 {
   std::cout << decay_string() << std::endl;
 }
+
+int DecayDescriptor::maxparticles() const
+{
+  int max = 0;
+  for (auto subdecay : subdecays_) {
+    if ( subdecay->particles_.size() > max ) max = subdecay->particles_.size();
+  }
+  return max;
+}

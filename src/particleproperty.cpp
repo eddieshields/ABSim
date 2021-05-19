@@ -18,6 +18,14 @@ ParticleProperty<T>& ParticleProperty<T>::operator=(const ParticleProperty<T>& r
 }
 
 template <typename T>
+ParticleProperty<T>& ParticleProperty<T>::operator=(const std::tuple<T,T>& rhs)
+{
+  gen_ = std::get<0>(rhs);
+  reco_ = std::get<1>(rhs);
+  return *this;
+}
+
+template <typename T>
 ParticleProperty<T>& ParticleProperty<T>::operator=(const T& rhs)
 {
   gen_ = rhs;

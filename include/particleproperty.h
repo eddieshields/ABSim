@@ -3,6 +3,8 @@
 
 #include "types.h"
 
+#include <tuple>
+
 namespace ABSIM {
 
   struct Property {
@@ -35,6 +37,7 @@ namespace ABSIM {
     ParticleProperty(const ParticleProperty<T>& rhs);
     // Move constructor.
     ParticleProperty<T>& operator=(const ParticleProperty<T>& rhs);
+    ParticleProperty<T>& operator=(const std::tuple<T,T>& rhs);
     ParticleProperty<T>& operator=(const T& rhs);
 
     // Operators.
@@ -43,7 +46,7 @@ namespace ABSIM {
     ParticleProperty<T> operator*(const ParticleProperty<T>& rhs);
     ParticleProperty<T> operator/(const ParticleProperty<T>& rhs);
 
-    const T operator()(Property::Type type)
+    T& operator()(Property::Type type)
     {
       switch (type) {
         case Property::Generated:

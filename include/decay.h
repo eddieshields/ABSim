@@ -2,11 +2,15 @@
 #define ABSIM_DECAY_H
 
 #include "particle.h"
+#include "genphasespace.h"
+#include "memorymanager.h"
 
 #include <array>
 #include <vector>
 
 namespace ABSIM {
+
+  const int MAXP_ = 18;
 
   /**
    * Decay
@@ -18,27 +22,34 @@ namespace ABSIM {
    */
   class Decay {
   private:
-    //Particle*              head_;
-    //std::vector<Particle*> daughters_;
+    Particle* mother_;
+    Particle* daughters_[MAXP_];
+    int       ndaughters_;
 
-    //const int    nt_;
-    //real_t       mass_[18];
-    //real_t       teCmTm_;
-    //real_t       wtMax_;
+    GenPhaseSpace          generator_;
 
   public:
-    //Decay(Particle* head, std::vector<Particle*> daughters) :
-    //  head_( head ),
-    //  daughters_( daughters ),
-    //  nt_( daughters_.size() )
-    //{}
+    static std::string NAME() { return "Decay"; }
     Decay() {}
     ~Decay() {}
 
-    void generate();
+    void generateDecay();
 
-  private:
-    inline static real_t q(const real_t& m, const real_t& m1, const real_t& m2) { return 0.5 * sqrt( m*m - 2*m1*m1 - 2*m2*m2 + (m1*m1-m2*m2)*(m1*m1-m2*m2)/(m*m) ); }
+    void* operator new (size_t size)
+    {
+      return MemoryManager<Decay>::allocate( size );
+    }
+
+    void* operator new[] (size_t size)
+    {
+      return MemoryManager<Decay>::allocate( size );
+    }
+
+    void operator delete (void* deleted)
+    {
+      MemoryManager<Decay>::free( deleted );
+    }
+
   };
 
 } // namespace ABSIM

@@ -4,6 +4,11 @@
 #include <stdexcept>
 #include <cassert>
 
+#define __host__
+#define __device__
+#define __shared__
+#define __global__
+
 struct dim3 {
   unsigned int x = 1;
   unsigned int y = 1;

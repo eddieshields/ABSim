@@ -32,7 +32,7 @@ namespace ABSIM {
     {}
     GenPhaseSpace(const GenPhaseSpace& gen);
     ~GenPhaseSpace() {}
-    GenPhaseSpace& operator=(const GenPhaseSpace* gen);
+    GenPhaseSpace& operator=(const GenPhaseSpace& gen);
 
     bool SetDecay(FourVector& p, int n, const real_t* mass);
     bool UpdateDecay(FourVector& p);

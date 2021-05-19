@@ -83,18 +83,18 @@ namespace ABSIM {
     inline void Boost(real_t bx, real_t by, real_t bz);
   };
 
-  FourVector::FourVector(real_t x , real_t y, real_t z, real_t t) :
+  inline FourVector::FourVector(real_t x , real_t y, real_t z, real_t t) :
     p_( x , y , z ), e_( t )
   {}
 
-  FourVector::FourVector(real_t* x0) :
+  inline FourVector::FourVector(real_t* x0) :
     p_( x0 ), e_( x0[3] )
   {}
-  FourVector::FourVector(const Vector3& p, real_t e) :
+  inline FourVector::FourVector(const Vector3& p, real_t e) :
     p_( p ), e_ ( e )
   {}
 
-  FourVector::FourVector(const FourVector& p) :
+  inline FourVector::FourVector(const FourVector& p) :
     p_( p.p_ ), e_( p.e_ )
   {}
 
@@ -102,6 +102,7 @@ namespace ABSIM {
   {
     p_ = rhs.p_;
     e_ = rhs.e_;
+    return *this;
   }
 
   inline real_t FourVector::operator()(int i) const
