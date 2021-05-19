@@ -78,6 +78,7 @@ namespace ABSIM {
     inline real_t Pt() const;
     inline real_t Beta() const;
     inline real_t Gamma() const;
+    inline real_t Rho() const;
     inline void Boost(const Vector3&);
     inline void Boost(real_t bx, real_t by, real_t bz);
   };
@@ -320,6 +321,11 @@ namespace ABSIM {
   {
     real_t b = Beta();
     return 1. / std::sqrt( 1 - ( b * b ) );
+  }
+
+  inline real_t FourVector::Rho() const
+  {
+    return p_.Mag();
   }
 
   inline void FourVector::Boost(const Vector3& b)
