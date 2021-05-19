@@ -8,6 +8,7 @@ namespace ABSIM {
 
   class Vector3
   {
+  friend class FourVector;
   private:
     real_t x_, y_, z_;
 
@@ -15,10 +16,10 @@ namespace ABSIM {
     Vector3() = default;
     Vector3(real_t x, real_t y, real_t z);
     Vector3(real_t*);
-    Vector3(const Vector3& p);
+    Vector3(const Vector3&);
     ~Vector3() {}
 
-    inline Vector3 operator=(const Vector3& rhs);
+    inline Vector3 operator=(const Vector3&);
 
     // Getters.
     inline real_t operator()(int) const;
@@ -43,12 +44,31 @@ namespace ABSIM {
     inline void SetZ(const real_t& z);
     inline void SetPx(const real_t& px);
     inline void SetPy(const real_t& py);
-    inline void SetPz(const real_t& px);
+    inline void SetPz(const real_t& pz);
     inline void SetXYZ(const real_t& x, const real_t& y, const real_t& z);
     inline void SetPxPyPz(const real_t& px, const real_t& py, const real_t& pz);
     inline void SetXYZ(real_t* x0);
     inline void SetPxPyPz(real_t* p0);
 
+    // Operators.
+    inline Vector3 operator+(const Vector3&);
+    inline Vector3 operator-(const Vector3&);
+    inline real_t operator*(const Vector3&);
+    inline Vector3 operator*(const real_t&);
+    inline bool operator==(const Vector3&) const;
+    inline bool operator!=(const Vector3&) const;
+    inline Vector3& operator+=(const Vector3&);
+    inline Vector3& operator-=(const Vector3&);
+    inline Vector3& operator*=(const Vector3&);
+    inline Vector3 operator-();
+
+    // Methods.
+    inline real_t Mag2() const;
+    inline real_t Mag() const;
+    inline real_t Perp2() const;
+    inline real_t Perp() const;
+    inline real_t Pt() const;
+    inline real_t CosTheta() const;
   };
 
   Vector3::Vector3(real_t x, real_t y, real_t z) :
@@ -189,6 +209,93 @@ namespace ABSIM {
     z_ = p0[2];
   }
 
+  inline Vector3 Vector3::operator+(const Vector3& rhs)
+  {
+    return Vector3( x_ + rhs.x_ , y_ + rhs.y_ , z_ + rhs.z_ );
+  }
+
+  inline Vector3 Vector3::operator-(const Vector3& rhs)
+  {
+    return Vector3( x_ - rhs.x_ , y_ - rhs.y_ , z_ - rhs.z_ );
+  }
+  inline real_t Vector3::operator*(const Vector3& rhs)
+  {
+    return ( x_ * rhs.x_ ) + ( y_ * rhs.y_ ) + ( z_ + rhs.z_ );
+  }
+  inline Vector3 Vector3::operator*(const real_t& a)
+  {
+    return Vector3( x_ * a , y_ * a , z_ * a );
+  }
+
+  inline bool Vector3::operator==(const Vector3& rhs) const
+  {
+    return ( rhs.x_ == x_ && rhs.y_ == y_ && rhs.z_ == z_ ) ? true : false;
+  }
+
+  inline bool Vector3::operator!=(const Vector3& rhs) const
+  {
+    return ( rhs.x_ != x_ || rhs.y_ != y_ || rhs.z_ != z_ ) ? true : false;
+  }
+
+  inline Vector3& Vector3::operator+=(const Vector3& rhs)
+  {
+    x_ += rhs.x_;
+    y_ += rhs.y_;
+    z_ += rhs.z_;
+    return *this;
+  }
+
+  inline Vector3& Vector3::operator-=(const Vector3& rhs)
+  {
+    x_ -= rhs.x_;
+    y_ -= rhs.y_;
+    z_ -= rhs.z_;
+    return *this;
+  }
+
+  inline Vector3& Vector3::operator*=(const Vector3& rhs)
+  {
+    x_ *= rhs.x_;
+    y_ *= rhs.y_;
+    z_ *= rhs.z_;
+    return *this;
+  }
+
+  inline Vector3 Vector3::operator-()
+  {
+    return Vector3( -x_ , -y_ , -z_ );
+  }
+
+  inline real_t Vector3::Mag2() const
+  {
+    return ( x_* x_ ) + ( y_ * y_ ) + ( z_ * z_ );
+  }
+
+  inline real_t Vector3::Mag() const
+  {
+    return std::sqrt( Mag2() );
+  }
+
+  inline real_t Vector3::Perp2() const
+  {
+    return ( x_ * x_ ) + ( y_ * y_ );
+  }
+
+  inline real_t Vector3::Perp() const
+  {
+    return std::sqrt( Perp2() );
+  }
+
+  inline real_t Vector3::Pt() const
+  {
+    return Perp();
+  }
+
+  inline real_t Vector3::CosTheta() const
+  {
+    real_t ptot = Mag();
+    return ptot == 0 ? 1. : z_/ptot;
+  }
 
 } //namespace ABSIM
 
