@@ -6,6 +6,7 @@
 #include "vertex.h"
 #include "fourvector.h"
 #include "memorymanager.h"
+#include "particlestore.h"
 
 #include <string>
 #include <iostream>
@@ -47,6 +48,16 @@ namespace ABSIM {
       time_( rhs.time_ ),
       pid_( rhs.pid_ ),
       q_( rhs.q_ )
+    {}
+    Particle(const BasicParticleInfo& info) :
+      momentum_(),
+      org_vertex_(),
+      end_vertex_(),
+      name_( info.name ),
+      mass_( info.mass_ ),
+      time_( info.time ),
+      pid_( info.pid ),
+      q_( info.q_ )
     {}
     ~Particle() {}
 

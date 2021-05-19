@@ -20,8 +20,15 @@ set (CMAKE_CXX_STANDARD 11)
 include_directories(include/)
 include_directories(backend/include/)
 
-##--- UMESIMD
-include_directories(external/umesimd)
+#--- Tell CMake where to find ROOT.
+list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
+
+#--- Locate the ROOT package and defines a number of variables (e.g. ROOT_INCLUDE_DIRS)
+find_package(ROOT REQUIRED COMPONENTS Core RooFit RooFitCore Tree MathCore Physics Hist EG)
+
+#--- Define useful ROOT functions and macros (e.g. ROOT_GENERATE_DICTIONARY)
+include(${ROOT_USE_FILE})
+include_directories(${ROOT_INCLUDE_DIRS})
 
 #--- Find threads.
 find_package(Threads REQUIRED)
@@ -35,7 +42,7 @@ add_library(${PACKAGE} SHARED ${SOURCES})
 target_include_directories(${PACKAGE} PUBLIC include)
 
 ##--- Link libraries
-target_link_libraries(${PACKAGE} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${PACKAGE} ${ROOT_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 
 ###--- Create an executable
 add_executable(ABSimRun ${CMAKE_SOURCE_DIR}/main/src/ABSim.cpp)

@@ -1,20 +1,22 @@
 #ifndef ABSIM_DECAYDESCRIPTOR_H
 #define ABSIM_DECAYDESCRIPTOR_H
 
+#include "particlestore.h"
 #include "msgservice.h"
 
 #include <vector>
 #include <string>
 #include <sstream>
 #include <map>
+#include <unordered_map>
 
 namespace ABSIM {
 
   struct SubDecayDescriptor
   {
-    SubDecayDescriptor*                        from_;
-    std::vector<std::string>                   particles_;
-    std::map<std::string,SubDecayDescriptor*>  decays_;
+    SubDecayDescriptor*                       from_;
+    std::vector<std::string>                  particles_;
+    std::map<std::string,SubDecayDescriptor*> decays_;
 
     friend std::ostream& operator<<(std::ostream& os, const SubDecayDescriptor& subdecay)
     {
@@ -32,16 +34,18 @@ namespace ABSIM {
   class DecayDescriptor
   {
   private:
-    std::string                      decay_;
-    std::string                      head_;
-    std::vector<std::string>         particles_;
-    std::vector<SubDecayDescriptor*> subdecays_;
+    std::string                                       decay_;
+    std::string                                       head_;
+    std::vector<std::string>                          particles_;
+    std::vector<SubDecayDescriptor*>                  subdecays_;
+    std::unordered_map<std::string,BasicParticleInfo> infos_;
 
     // Decode Descriptor.
     void decodeDecay(std::string decay);
     bool beginDecay(std::string entry);
     bool endDecay(std::string entry);
     bool isDecaySign(std::string entry);
+    void getInfo(std::string entry);
 
     // Print Descriptor.
     std::string print_subdecay(std::string& out, SubDecayDescriptor* subdecay) const;

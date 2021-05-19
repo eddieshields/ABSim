@@ -2,6 +2,13 @@
 
 using namespace ABSIM;
 
+void DecayDescriptor::getInfo(std::string name)
+{
+  BasicParticleInfo info = ParticleStore::getParticle( name );
+  infos_.insert( std::pair<std::string,BasicParticleInfo>( name , info ) );
+  return;
+}
+
 bool DecayDescriptor::beginDecay(std::string entry)
 {
   if ( ( entry == "(" ) || ( entry == "{" ) || ( entry == "[" )  ) return true;
@@ -35,6 +42,7 @@ void DecayDescriptor::decodeDecay(std::string decay)
       subdecay->from_ = nullptr;
       subdecay->particles_.push_back( entry );
       decay_particle = false;
+      getInfo( entry );
       continue;
     }
 
@@ -57,6 +65,7 @@ void DecayDescriptor::decodeDecay(std::string decay)
     if ( isDecaySign(entry) ) continue;
 
     particles_.push_back( entry );
+    getInfo( entry );
 
     if ( decay_particle == true ) {
       subdecay->from_->particles_.push_back( entry );

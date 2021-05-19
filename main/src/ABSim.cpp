@@ -7,7 +7,7 @@ using namespace ABSIM;
 
 int main()
 {
-  std::string descriptor_str = "D*+ => { D0 => { KS0 => pi+ pi- } K+ K- } pi+";
+  std::string descriptor_str = "D*+ => { D0 => { K_S0 => pi+ pi- } K+ K- } pi+";
   ABSim simulate(descriptor_str);
   simulate.run();
 
