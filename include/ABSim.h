@@ -8,6 +8,7 @@
 #include "threadpool.h"
 #include "backend.h"
 #include "clock.h"
+#include "welcome.h"
 
 namespace ABSIM {
 
@@ -27,10 +28,15 @@ namespace ABSIM {
     void allocateMemory();
 
   public:
-    ABSim() = default;
+    ABSim()
+    {
+      Welcome::message();
+    };
     ABSim(std::string decay) :
       descriptor_( decay )
-    {}
+    {
+      Welcome::message();
+    }
     ~ABSim() {}
 
     ABSimConfiguration& operator()() { return configuration_; }
