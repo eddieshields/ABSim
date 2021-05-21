@@ -45,8 +45,8 @@ GenPhaseSpace& GenPhaseSpace::operator=(const GenPhaseSpace& gen)
 FourVector* GenPhaseSpace::GetDecay(int n)
 {
   if ( n > n_ ) ERROR("Bad index " << n);
-  return decProd_ + n;
-} 
+  return decProd_[n];
+}
 
 bool GenPhaseSpace::SetDecay(FourVector& p, int n, const real_t* mass)
 {
@@ -143,12 +143,12 @@ real_t GenPhaseSpace::Generate()
     wt *= pd[n];
   }
 
-  decProd_[0].SetPxPyPzE( 0 , pd[0] , 0 , std::sqrt( ( pd[0] * pd[0] ) + ( mass_[0] * mass_[0] ) ) );
+  decProd_[0]->SetPxPyPzE( 0 , pd[0] , 0 , std::sqrt( ( pd[0] * pd[0] ) + ( mass_[0] * mass_[0] ) ) );
 
   int i = 1;
   int j;
   while (1) {
-    decProd_[i].SetPxPyPzE( 0 , -pd[i-1] , 0 , std::sqrt( ( pd[i-1] * pd[i-1] ) + ( mass_[i] * mass_[i] ) ) );
+    decProd_[i]->SetPxPyPzE( 0 , -pd[i-1] , 0 , std::sqrt( ( pd[i-1] * pd[i-1] ) + ( mass_[i] * mass_[i] ) ) );
 
     real_t cZ = 2 * rand() - 1;
     real_t sZ = std::sqrt( 1 - cZ * cZ );
@@ -156,7 +156,7 @@ real_t GenPhaseSpace::Generate()
     real_t cY = std::cos( angY );
     real_t sY = std::sin( angY );
     for (j = 0; j <= i; j++) {
-      FourVector *v = decProd_ + j;
+      FourVector *v = decProd_[j];
       real_t x = v->Px();
       real_t y = v->Py();
       v->SetPx( ( cZ * x ) - ( sZ * y ) );
@@ -170,11 +170,11 @@ real_t GenPhaseSpace::Generate()
     if ( i == ( n_ - 1 ) ) break;
 
     real_t beta = pd[i] / std::sqrt( ( pd[i] * pd[i] ) + invMass[i] * invMass[i] );
-    for (j = 0; j <= i; j++ ) decProd_[j].Boost(0,beta,0);
+    for (j = 0; j <= i; j++ ) decProd_[j]->Boost(0,beta,0);
   }
 
   // Final boost of all particles.
-  for (n = 0; n < n_; n++) decProd_[n].Boost( beta_[0] , beta_[1] , beta_[2] );
+  for (n = 0; n < n_; n++) decProd_[n]->Boost( beta_[0] , beta_[1] , beta_[2] );
 
   // Return weight of event.
   return wt;

@@ -3,6 +3,7 @@
 
 #include "particle.h"
 #include "decay.h"
+#include "beam.h"
 #include "decaydescriptor.h"
 #include "memorymanager.h"
 
@@ -25,6 +26,8 @@ namespace ABSIM {
     ~Event() {}
 
     void reset();
+
+    void generate();
 
     void* operator new (size_t size)
     {

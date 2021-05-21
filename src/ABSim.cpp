@@ -33,6 +33,7 @@ void ABSim::generate()
   Event* event = new Event(descriptor_);
   for (int i = blockIdx.x; i < configuration_.EvtMax - 8; i += 8) {
     event = new Event(descriptor_);
+    //event->generate();
   }
   event->reset();
 }

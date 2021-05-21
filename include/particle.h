@@ -16,6 +16,7 @@ namespace ABSIM {
   class Particle
   {
   friend class Decay;
+  friend class Event;
   private:
     ParticleProperty<FourVector> momentum_;
     ParticleProperty<Vertex>     org_vertex_;

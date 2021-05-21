@@ -34,6 +34,8 @@ namespace ABSIM {
     Decay() {}
     ~Decay() {}
 
+    void setDecay();
+
     void generateDecay();
 
     void* operator new (size_t size)

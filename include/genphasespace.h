@@ -4,6 +4,7 @@
 #include "types.h"
 #include "fourvector.h"
 #include "msgservice.h"
+#include "particle.h"
 
 #include <math.h>
 
@@ -11,6 +12,7 @@ namespace ABSIM {
 
   class GenPhaseSpace
   {
+  friend class Decay;
   private: 
     int n_;
     real_t mass_[18];
@@ -18,7 +20,7 @@ namespace ABSIM {
     real_t teCmTm_;
     real_t pM_;
     real_t wtMax_;
-    FourVector decProd_[18];
+    FourVector* decProd_[18];
 
     inline real_t pdk_(real_t a, real_t b, real_t c) const;
 
