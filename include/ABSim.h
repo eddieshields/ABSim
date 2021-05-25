@@ -21,6 +21,7 @@ namespace ABSIM {
   class ABSim
   {
   private:
+    Event*             events_;
     ABSimConfiguration configuration_;
     DecayDescriptor    descriptor_;
     ThreadPool         threadpool_;

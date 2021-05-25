@@ -2,10 +2,10 @@
 
 using namespace ABSIM;
 
-void DecayDescriptor::getInfo(std::string name)
+void DecayDescriptor::getParticleInfo(std::string name)
 {
   BasicParticleInfo info = ParticleStore::getParticle( name );
-  infos_.insert( std::pair<std::string,BasicParticleInfo>( name , info ) );
+  particle_info_.push_back( info  );
   return;
 }
 
@@ -27,12 +27,6 @@ bool DecayDescriptor::isDecaySign(std::string entry)
   return false;
 }
 
-int DecayDescriptor::find(std::string entry)
-{
-  auto it = std::find(particles_.begin(),particles_.end(),entry);
-  return it - particles_.begin();
-}
-
 void DecayDescriptor::decodeDecay(std::string decay)
 {
   SubDecayDescriptor* subdecay = nullptr;
@@ -40,19 +34,6 @@ void DecayDescriptor::decodeDecay(std::string decay)
   std::istringstream ss(decay);
   std::string entry;
   while ( ss >> entry ) {
-    // First particle must be head.
-    if ( head_ == "" ) {
-      head_ = entry;
-      subdecays_.push_back( new SubDecayDescriptor() );
-      subdecay = subdecays_.back();
-      subdecay->from_ = nullptr;
-      subdecay->particles_.push_back( entry );
-      subdecay->index( entry ) = find( entry );
-      getInfo( entry );
-      decay_particle = false;
-      continue;
-    }
-
     if ( beginDecay(entry) ) {
       subdecays_.push_back( new SubDecayDescriptor() );
       SubDecayDescriptor* from = subdecay;
@@ -71,20 +52,44 @@ void DecayDescriptor::decodeDecay(std::string decay)
 
     if ( isDecaySign(entry) ) continue;
 
+    // Add particle.
     particles_.push_back( entry );
-    getInfo( entry );
+    getParticleInfo( entry );
 
-    if ( decay_particle == true ) {
-      subdecay->from_->particles_.push_back( entry );
-      subdecay->particles_.push_back( entry );
-      subdecay->from_->decays_.insert( std::pair<std::string,SubDecayDescriptor*>(particles_.back(),subdecay));
+    // First particle must be head.
+    if ( head_ == "" ) {
+      head_ = entry;
+
+      // Add sub-decay.
+      subdecays_.push_back( new SubDecayDescriptor() );
+      subdecay = subdecays_.back();
+      subdecay->from_ = nullptr;
+      subdecay->addParticle( entry , currentIndex() );
+
       decay_particle = false;
       continue;
     }
 
-    subdecay->particles_.push_back( entry );
-    subdecay->index( entry ) = find( entry );
-    subdecay->decays_.insert( std::pair<std::string,SubDecayDescriptor*>(particles_.back() , nullptr) );
+    if ( decay_particle == true ) {
+      subdecay->from_->addParticle( entry , currentIndex() );
+      subdecay->from_->addDecay( currentIndex() , subdecay );
+      subdecay->addParticle( entry , currentIndex() );
+      decay_particle = false;
+      continue;
+    }
+
+    subdecay->addParticle( entry , currentIndex() );
+    subdecay->addDecay( currentIndex() , nullptr );
+  }
+  
+  for (int i = 0; i < subdecays_.size(); i++) {
+    DecayInfo info;
+    info.ndaughters = subdecays_[i]->particles_.size() - 1;
+    info.mother = subdecays_[i]->indices_[0];
+    for (int j = 1; j < subdecays_[i]->particles_.size(); j++) {
+      info.daughters.push_back( subdecays_[i]->indices_[j] );
+    }
+    decay_info_.push_back( std::move( info ) );
   }
   return;
 }
@@ -93,11 +98,11 @@ std::string DecayDescriptor::print_subdecay(std::string& out, SubDecayDescriptor
 {
   out += "{ " + subdecay->particles_.front() + " => ";
   for (unsigned int i = 1; i < subdecay->particles_.size(); ++i) {
-    std::string part = subdecay->particles_[i];
-    if ( subdecay->decays_[part] != nullptr ) {
-      print_subdecay(out, subdecay->decays_[part]);
+    int index = subdecay->indices_[i];
+    if ( subdecay->decays_[index] != nullptr ) {
+      print_subdecay(out, subdecay->decays_[index]);
     } else {
-      out += part + " ";
+      out += subdecay->particles_[i] + " ";
     }
   }
   out += "} ";
@@ -110,11 +115,11 @@ std::string DecayDescriptor::decay_string() const
   SubDecayDescriptor* subdecay = subdecays_.front();
   out += subdecay->particles_.front() + " => ";
   for (unsigned int i = 1; i < subdecay->particles_.size(); ++i) {
-    std::string part = subdecay->particles_[i];
-    if ( subdecay->decays_[part] != nullptr ) {
-      print_subdecay(out, subdecay->decays_[part]);
+    int index = subdecay->indices_[i];
+    if ( subdecay->decays_[index] != nullptr ) {
+      print_subdecay(out, subdecay->decays_[index]);
     } else {
-      out += part + " ";
+      out += subdecay->particles_[i] + " ";
     }
   }
   return out;

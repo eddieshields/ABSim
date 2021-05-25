@@ -17,24 +17,38 @@ namespace ABSIM {
   {
     SubDecayDescriptor*                       from_;
     std::vector<std::string>                  particles_;
-    std::map<std::string,SubDecayDescriptor*> decays_;
-    std::unordered_map<std::string,int>       pairs_;
+    std::vector<int>                          indices_;
+    std::map<int,SubDecayDescriptor*>         decays_;
 
+    void addParticle(std::string name, int index)
+    {
+      particles_.push_back( name );
+      indices_.push_back( index );
+    }
+    void addDecay(int index, SubDecayDescriptor* decay)
+    {
+      decays_.insert( std::pair<int,SubDecayDescriptor*>( index , decay ) );
+    }
     inline int                       size() const             { return static_cast<int>(particles_.size()); }
     inline std::vector<std::string>& particles()              { return particles_; }
-    inline int&                      index(std::string& name) { return pairs_[name]; }
 
     friend std::ostream& operator<<(std::ostream& os, const SubDecayDescriptor& subdecay)
     {
       os << subdecay.particles_.front() << " => ";
       for (unsigned int i = 0; i < subdecay.particles_.size(); ++i) {
-        std::string part = subdecay.particles_[i];
-        auto it = subdecay.decays_.find( part );
+        auto it = subdecay.decays_.find( i );
         if ( it->second != nullptr ) os << *(it->second);
         else os << subdecay.particles_[i] << " ";
       }
       return os;
     }
+  };
+
+  struct DecayInfo
+  {
+    int              ndaughters;
+    int              mother;
+    std::vector<int> daughters;
   };
 
   class DecayDescriptor
@@ -44,15 +58,17 @@ namespace ABSIM {
     std::string                                       head_;
     std::vector<std::string>                          particles_;
     std::vector<SubDecayDescriptor*>                  subdecays_;
-    std::unordered_map<std::string,BasicParticleInfo> infos_;
+
+    std::vector<BasicParticleInfo>                     particle_info_;
+    std::vector<DecayInfo>                             decay_info_;
 
     // Decode Descriptor.
     void decodeDecay(std::string decay);
     bool beginDecay(std::string entry);
     bool endDecay(std::string entry);
     bool isDecaySign(std::string entry);
-    void getInfo(std::string entry);
-    int find(std::string entry);
+    void getParticleInfo(std::string entry);
+    int currentIndex() { return particles_.size() - 1; }
 
     // Print Descriptor.
     std::string print_subdecay(std::string& out, SubDecayDescriptor* subdecay) const;
@@ -67,12 +83,11 @@ namespace ABSIM {
     }
     ~DecayDescriptor() {}
 
-    inline std::vector<std::string>                          particles() const { return particles_; }
-    inline std::vector<SubDecayDescriptor*>                  decays()    const { return subdecays_; }
-    inline std::unordered_map<std::string,BasicParticleInfo> info()      const { return infos_; }
+    inline std::vector<BasicParticleInfo>                    particles() const { return particle_info_; }
+    inline std::vector<DecayInfo>                            decays()    const { return decay_info_; }
 
-    int nparticles() const { return particles_.size(); }
-    int ndecays()    const { return subdecays_.size(); }
+    inline int nparticles() const { return particles_.size(); }
+    inline int ndecays()    const { return subdecays_.size(); }
 
     void Print() const;
 

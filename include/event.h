@@ -15,6 +15,7 @@ namespace ABSIM {
   {
   private:
     int       n_;
+    int       ndecays_;
     Particle* particles_;
     Decay*    decays_;
 

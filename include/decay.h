@@ -2,6 +2,7 @@
 #define ABSIM_DECAY_H
 
 #include "particle.h"
+#include "decaydescriptor.h"
 #include "genphasespace.h"
 #include "memorymanager.h"
 
@@ -34,6 +35,16 @@ namespace ABSIM {
     Decay() {}
     ~Decay() {}
 
+    inline void construct(Particle* particles, const DecayInfo& info)
+    {
+      mother_ = particles + info.mother;
+      ndaughters_ = info.ndaughters;
+      for(int i = 0; i < info.ndaughters; i++) {
+        daughters_[i] = particles + info.daughters[i];
+      }
+      //setDecay();
+    }
+
     void setDecay();
 
     void generateDecay();
@@ -52,7 +63,6 @@ namespace ABSIM {
     {
       MemoryManager<Decay>::free( deleted );
     }
-
   };
 
 } // namespace ABSIM

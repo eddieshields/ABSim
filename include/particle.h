@@ -86,6 +86,15 @@ namespace ABSIM {
 
     const std::string name() const { return name_; };
 
+    inline void construct(const BasicParticleInfo& info)
+    {
+      name_ = info.name;
+      mass_ = info.mass;
+      time_ = info.time;
+      pid_ = info.pid;
+      q_ = info.q;
+    }
+
     void reset()
     {
       momentum_ = FourVector();
