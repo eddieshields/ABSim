@@ -1,6 +1,6 @@
 #include "cputhreads.h"
 
-thread_local unsigned int threadId_;
-unsigned int threadN_;
+ABSIM::ThreadPool gPool;
+
 GridDimensions gridDim;
 thread_local BlockIndices blockIdx;

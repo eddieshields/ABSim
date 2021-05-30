@@ -1,7 +1,6 @@
 #ifndef ABSIM_THREADPOOL_H
 #define ABSIM_THREADPOOL_H
 
-#include "CPUBackend.h"
 #include "types.h"
 #include "msgservice.h"
 
@@ -11,6 +10,9 @@
 #include <vector>
 #include <queue>
 #include <future>
+
+extern thread_local unsigned int threadId_;
+extern unsigned int threadN_;
 
 namespace ABSIM {
 

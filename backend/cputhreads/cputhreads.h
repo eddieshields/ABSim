@@ -2,10 +2,13 @@
 #define ABSIM_THREADS_H
 
 #include "threadpool.h"
+#include "msgservice.h"
 
 #include <stdexcept>
 #include <cassert>
 #include <tuple>
+#include <future>
+#include <vector>
 
 #define __host__
 #define __device__
@@ -53,8 +56,6 @@ struct ThreadIndices {
   unsigned int z = 0;
 };
 
-extern thread_local unsigned int threadId_;
-extern unsigned int threadN_;
 extern GridDimensions gridDim;
 extern thread_local BlockIndices blockIdx;
 constexpr BlockDimensions blockDim;
@@ -79,10 +80,10 @@ void invoke_device_function(
         }
       }
     }
-  }
+  };
   returns.push_back( gPool.submit( lam ) );
   // Wait for threads to finish running.
-  for (auto r : returns) {
+  for (auto& r : returns) {
     r.get();
   }
 }

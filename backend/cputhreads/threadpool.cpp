@@ -1,5 +1,8 @@
 #include "threadpool.h"
 
+thread_local unsigned int threadId_;
+unsigned int threadN_;
+
 using namespace ABSIM;
 
 ThreadPool::ThreadPool(size_t threads) :
@@ -10,6 +13,7 @@ ThreadPool::ThreadPool(size_t threads) :
     return;
   }
   if ( !threads ) { nthreads_ = std::thread::hardware_concurrency(); } else { nthreads_ = threads; }
+  debug() << "Creating ThreadPool with " << nthreads_ << " threads" << endmsg;
   for(size_t i = 0; i < nthreads_ ; ++i) {
     workers_.emplace_back( Worker( this , id_ ) );
     ++id_;
