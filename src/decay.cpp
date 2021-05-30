@@ -12,13 +12,13 @@ void Decay::setDecay()
   }
 
   bool pass = generator_.SetDecay(mother_->momentum_(Property::Generated) , ndaughters_ , masses.data() );
-  ABSIM_INFO( pass );
+ info() << pass << endmsg;
 }
 
 void Decay::generateDecay()
 {
   //generator_.UpdateDecay(mother_->momentum_(Property::Generated));
-  //ABSIM_INFO(mother_->momentum_(Property::Generated).M2());
+  //info() << mother_->momentum_(Property::Generated).M2() << endmsg;
   setDecay();
-  ABSIM_INFO( generator_.Generate() );
+  info() <<  generator_.Generate() << endmsg;
 }

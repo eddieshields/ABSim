@@ -2,4 +2,4 @@
 
 using namespace ABSIM;
 
-bool Welcome::welcomed_ = false;
+bool welcomed_ = false;

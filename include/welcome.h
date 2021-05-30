@@ -20,18 +20,20 @@ static const char* welcome_message = R"(
   *                                                            *
   **************************************************************)";
 
-  class Welcome
-  {
-  private:
-    static bool welcomed_;
-  public:
-    static void message() {
-      if ( !welcomed_ ) {
-          std::cout << "\033[1;31m" << welcome_message << "\033[0m\n";
-      }
-      welcomed_ = true;
+  int print_banner();
+
+  static int dum = print_banner();
+
+
+  static bool welcomed_;
+
+  int print_banner() {
+    if ( !welcomed_ ) {
+        std::cout << "\033[1;31m" << welcome_message << "\033[0m\n";
     }
-  };
+    welcomed_ = true;
+    return 0;
+  }
 
 } // namespace ABSIM
 

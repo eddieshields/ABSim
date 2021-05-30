@@ -5,10 +5,8 @@
 #include "decaydescriptor.h"
 #include "memorymanager.h"
 #include "msgservice.h"
-#include "threadpool.h"
 #include "backend.h"
 #include "clock.h"
-#include "welcome.h"
 
 namespace ABSIM {
 
@@ -24,20 +22,15 @@ namespace ABSIM {
     Event*             events_;
     ABSimConfiguration configuration_;
     DecayDescriptor    descriptor_;
-    ThreadPool         threadpool_;
 
     void allocateMemory();
 
   public:
     ABSim()
-    {
-      Welcome::message();
-    };
+    {};
     ABSim(std::string decay) :
       descriptor_( decay )
-    {
-      Welcome::message();
-    }
+    {}
     ~ABSim() {}
 
     ABSimConfiguration& operator()() { return configuration_; }

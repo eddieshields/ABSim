@@ -44,7 +44,7 @@ GenPhaseSpace& GenPhaseSpace::operator=(const GenPhaseSpace& gen)
 
 FourVector* GenPhaseSpace::GetDecay(int n)
 {
-  if ( n > n_ ) ERROR("Bad index " << n);
+  if ( n > n_ ) error() << "Bad index " << n << endmsg;
   return decProd_[n];
 }
 
@@ -125,7 +125,7 @@ real_t GenPhaseSpace::Generate()
   rno[0] = 0;
   int n;
   if ( n_ > 2 ) {
-    for (n = 1; n < n_; n++) rno[n] = rand();
+    for (n = 1; n < n_; n++) rno[n] = Random::Rnd();
     qsort(rno+1, n_ - 2, sizeof(real_t), DoubleMax);
   }
   rno[n_-1] = 1.;
@@ -150,9 +150,9 @@ real_t GenPhaseSpace::Generate()
   while (1) {
     decProd_[i]->SetPxPyPzE( 0 , -pd[i-1] , 0 , std::sqrt( ( pd[i-1] * pd[i-1] ) + ( mass_[i] * mass_[i] ) ) );
 
-    real_t cZ = 2 * rand() - 1;
+    real_t cZ = 2 * Random::Rnd() - 1;
     real_t sZ = std::sqrt( 1 - cZ * cZ );
-    real_t angY = 2 * M_PI * rand();
+    real_t angY = 2 * M_PI * Random::Rnd();
     real_t cY = std::cos( angY );
     real_t sY = std::sin( angY );
     for (j = 0; j <= i; j++) {

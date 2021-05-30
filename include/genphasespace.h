@@ -5,6 +5,7 @@
 #include "fourvector.h"
 #include "msgservice.h"
 #include "particle.h"
+#include "random.h"
 
 #include <math.h>
 

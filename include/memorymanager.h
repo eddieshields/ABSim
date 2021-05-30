@@ -20,7 +20,7 @@ namespace ABSIM {
   public:
     static void request(int n)
     {
-      ABSIM_INFO("Requested to allocate memory for " << n << " " << T::NAME() << "s");
+      debug() << "Requested to allocate memory for " << n << " " << T::NAME() << "s" << endmsg;
       pool_ = reinterpret_cast<T*>( new char[sizeof(T)*n] );
       head_ = 0;
       tail_ = n;
@@ -30,7 +30,7 @@ namespace ABSIM {
     {
       int n = size / size_;
       if ( head_ + n > tail_ ) {
-        FATAL("Not enough memory to allocate more " << T::NAME() << "s");
+        fatal() << "Not enough memory to allocate more " << T::NAME() << "s" << exit;
       }
 
       int head = head_.fetch_add( n );

@@ -18,13 +18,7 @@ void ABSim::run()
   events_ = new Event[configuration_.EvtMax];
   auto func = [&](){return this->generate();};
   CLOCK_START;
-  //std::vector<std::future<void>> futures;
-  //for (int i = 0; i < 8; i++) {
-  //  futures.push_back( threadpool_.submit( func ) );
-  //}
-  //for (int j = 0; j < 8; j++) {
-  //  futures[j].get();
-  //}
+  invoke_device_function(func,dim3(configuration_.EvtMax,0,0),dim3(0,0,0));
   func();
   CLOCK_STOP;
   CLOCK_TASK( "Generate 1M events" );
@@ -32,9 +26,9 @@ void ABSim::run()
 
 void ABSim::generate()
 {
-  for (int i = 0; i < configuration_.EvtMax ; i++) {
+  for (int i = blockIdx.x; i < configuration_.EvtMax ; i += blockDim.x) {
     events_[i] = Event(descriptor_);
-    events_[i].generate();
+    //events_[i].generate();
   }
   //event->reset();
 }

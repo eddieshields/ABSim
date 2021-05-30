@@ -117,7 +117,7 @@ namespace ABSIM {
       case 3:
         return e_;
     default:
-        ERROR("Bad index: " << i);
+        error() << "Bad index: " << i << endmsg;
     }
     return 0.;
   }
@@ -139,7 +139,7 @@ namespace ABSIM {
       case 3:
         return e_;
     default:
-        ERROR("Bad index: " << i);
+        error() << "Bad index: " << i << endmsg;
     }
     return e_;
   }
