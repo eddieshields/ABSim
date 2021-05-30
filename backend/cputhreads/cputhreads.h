@@ -1,5 +1,5 @@
-#ifndef ABSIM_CPUBACKEND_H
-#define ABSIM_CPUBACKEND_H
+#ifndef ABSIM_THREADS_H
+#define ABSIM_THREADS_H
 
 #include "threadpool.h"
 
@@ -11,6 +11,11 @@
 #define __device__
 #define __shared__
 #define __global__
+
+/**
+ * @brief Macro to avoid warnings on Release builds with variables used by asserts.
+ */
+#define _unused(x) ((void) (x))
 
 struct dim3 {
   unsigned int x = 1;
@@ -48,34 +53,34 @@ struct ThreadIndices {
   unsigned int z = 0;
 };
 
-extern thread_local GridDimensions gridDim;
+extern thread_local unsigned int threadId_;
+extern unsigned int threadN_;
+extern GridDimensions gridDim;
 extern thread_local BlockIndices blockIdx;
-extern BlockDimensions blockDim;
+constexpr BlockDimensions blockDim;
 constexpr ThreadIndices threadIdx;
 
 extern ABSIM::ThreadPool gPool;
 
-template<class Fn, class Tuple, unsigned long... I>
+template<class Fn>
 void invoke_device_function(
   Fn&& function,
   const dim3& grid_dim,
-  const dim3& block_dim,
-  const Tuple& invoke_arguments,
-  std::index_sequence<I...>)
+  const dim3& block_dim)
 {
+  _unused(block_dim);
   std::vector<std::future<void>> returns;
-  gridDim = {grid_dim.x, grid_dim.y, grid_dim.z};
-  for (unsigned int i = 0; i < grid_dim.x; ++i) {
-    auto lam = [&] {
+  auto lam = [&] {
+    for (unsigned int i = threadId_; i < grid_dim.x; i += threadN_) {
       for (unsigned int j = 0; j < grid_dim.y; ++j) {
         for (unsigned int k = 0; k < grid_dim.z; ++k) {
           blockIdx = {i, j, k};
-          function(std::get<I>(invoke_arguments)...);
+          function();
         }
       }
     }
-    returns.push_back( gPool.submit( lam ) );
   }
+  returns.push_back( gPool.submit( lam ) );
   // Wait for threads to finish running.
   for (auto r : returns) {
     r.get();

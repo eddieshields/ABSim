@@ -31,7 +31,7 @@ namespace ABSIM {
 
       void operator() () {
         // Use a thread as a block.
-        blockIdx.x = id_;
+        threadId_ = id_;
 
         std::function<void()> task;
         while ( true ) {

@@ -15,7 +15,7 @@ ThreadPool::ThreadPool(size_t threads) :
     ++id_;
   }
 
-  blockDim.x = nthreads_;
+  threadN_ = nthreads_;
 }
 
 ThreadPool::~ThreadPool()

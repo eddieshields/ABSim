@@ -52,20 +52,18 @@ constexpr BlockDimensions blockDim;
 constexpr ThreadIndices threadIdx;
 
 
-template<class Fn, class Tuple, unsigned long... I>
+template<class Fn>
 void invoke_device_function(
   Fn&& function,
   const dim3& grid_dim,
-  const dim3& block_dim,
-  const Tuple& invoke_arguments,
-  std::index_sequence<I...>)
+  const dim3& block_dim)
 {
   gridDim = {grid_dim.x, grid_dim.y, grid_dim.z};
   for (unsigned int i = 0; i < grid_dim.x; ++i) {
     for (unsigned int j = 0; j < grid_dim.y; ++j) {
       for (unsigned int k = 0; k < grid_dim.z; ++k) {
         blockIdx = {i, j, k};
-        function(std::get<I>(invoke_arguments)...);
+        function();
       }
     }
   }
