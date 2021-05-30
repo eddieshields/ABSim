@@ -30,6 +30,7 @@ namespace ABSIM {
 
     void generate();
 
+    /*
     void* operator new (size_t size)
     {
       return MemoryManager<Event>::allocate( size );
@@ -44,6 +45,7 @@ namespace ABSIM {
     {
       MemoryManager<Event>::free( deleted );
     }
+    */
   };
 
 } // namespace ABSIM

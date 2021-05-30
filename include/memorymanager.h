@@ -30,7 +30,7 @@ namespace ABSIM {
     {
       int n = size / size_;
       if ( head_ + n > tail_ ) {
-        fatal() << "Not enough memory to allocate more " << T::NAME() << "s" << exit;
+        fatal() << "Not enough memory to allocate more " << T::NAME() << "s" << leave;
       }
 
       int head = head_.fetch_add( n );

@@ -28,7 +28,7 @@ void ABSim::generate()
 {
   for (int i = blockIdx.x; i < configuration_.EvtMax ; i += blockDim.x) {
     events_[i] = Event(descriptor_);
-    //events_[i].generate();
+    events_[i].generate();
   }
   //event->reset();
 }

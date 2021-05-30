@@ -11,6 +11,11 @@
 #define __shared__
 #define __global__
 
+/**
+ * @brief Macro to avoid warnings on Release builds with variables used by asserts.
+ */
+#define _unused(x) ((void) (x))
+
 struct dim3 {
   unsigned int x = 1;
   unsigned int y = 1;
@@ -61,7 +66,7 @@ void invoke_device_function(
   const dim3& grid_dim,
   const dim3& block_dim)
 {
-  __unused(block_dim);
+  _unused(block_dim);
   #pragma omp parallel for
     for (unsigned int i = threadId_; i < grid_dim.x; i += threadN_) {
       for (unsigned int j = 0; j < grid_dim.y; ++j) {

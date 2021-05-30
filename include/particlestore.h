@@ -35,7 +35,7 @@ namespace ABSIM {
       }
 
       TParticlePDG* pdg_particle = pdg_.GetParticle(name.c_str());
-      if ( pdg_particle == nullptr ) fatal() << "Particle " << name << " is not recognised!" << exit;
+      if ( pdg_particle == nullptr ) fatal() << "Particle " << name << " is not recognised!" << leave;
 
       BasicParticleInfo particle;
       particle.name = name;

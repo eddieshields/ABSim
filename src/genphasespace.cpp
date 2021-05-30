@@ -171,6 +171,7 @@ real_t GenPhaseSpace::Generate()
 
     real_t beta = pd[i] / std::sqrt( ( pd[i] * pd[i] ) + invMass[i] * invMass[i] );
     for (j = 0; j <= i; j++ ) decProd_[j]->Boost(0,beta,0);
+    i++;
   }
 
   // Final boost of all particles.

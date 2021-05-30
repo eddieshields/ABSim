@@ -1,4 +1,4 @@
-#include "cpu.h"
+#include "openmp.h"
 
 GridDimensions gridDim;
 BlockIndices blockIdx;

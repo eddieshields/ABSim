@@ -42,13 +42,14 @@ namespace ABSIM {
       for(int i = 0; i < info.ndaughters; i++) {
         daughters_[i] = particles + info.daughters[i];
       }
-      //setDecay();
+      setDecay();
     }
 
     void setDecay();
 
     void generateDecay();
 
+    /*
     void* operator new (size_t size)
     {
       return MemoryManager<Decay>::allocate( size );
@@ -63,6 +64,7 @@ namespace ABSIM {
     {
       MemoryManager<Decay>::free( deleted );
     }
+    */
   };
 
 } // namespace ABSIM

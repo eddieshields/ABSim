@@ -109,8 +109,10 @@ namespace MSGSERVICE {
   << "  FATAL        "                \
   << "\033[0m"
 
-#define endmsg "\033[0m" << std::endl
+#define endmsg "\n"
 
-#define exit endmsg; //throw std::runtime_error( trimmedString( __PRETTY_FUNCTION__)+ " FATAL" )
+#define leave "\n"
+
+//throw std::runtime_error( trimmedString( __PRETTY_FUNCTION__)+ " FATAL" )
 
 #endif
