@@ -4,21 +4,35 @@ set(PACKAGE ABSIM)
 project(${PACKAGE})
 
 #--- Options
-option(DEBUG "Debug" ON)
-option(RELEASE "Release" OFF)
+option(BUILD_TESTS "Build test programs" OFF)
 
-if (DEBUG)
+#--- Device target architecture
+set(TARGET_BACKEND CPU CACHE STRING "Target architecture of the device")
+set_property(CACHE TARGET_BACKEND PROPERTY STRINGS CPU THREADS OPENMP GPU)
+
+#--- CMake build type.
+set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "Build type")
+set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS RelWithDebInfo Release Debug)
+
+
+#--- Compiler flag options.
+if (CMAKE_BUILD_TYPE STREQUAL "DEBUG")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -Wpedantic -g")
 endif()
 
-if (RELEASE)
+if (CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -Wpedantic -g -O3 -march=native")
+endif()
+
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -march=native")
 endif()
+
+
 
 set (CMAKE_CXX_STANDARD 17)
 
 include_directories(include/)
-include_directories(backend/include/)
 
 #--- Tell CMake where to find ROOT.
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
@@ -30,21 +44,21 @@ find_package(ROOT REQUIRED COMPONENTS Core RooFit RooFitCore Tree MathCore Physi
 include(${ROOT_USE_FILE})
 include_directories(${ROOT_INCLUDE_DIRS})
 
-#--- Find threads.
-find_package(Threads REQUIRED)
-
-##--- Define the header and src directories
+#--- Define the header and src directories
 file(GLOB_RECURSE HEADERS include/*.h)
-file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp ${CMAKE_SOURCE_DIR}/backend/src/*.cpp)
+file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
 ##--- Generate library 
 add_library(${PACKAGE} SHARED ${SOURCES})
-target_include_directories(${PACKAGE} PUBLIC include backend/include)
+target_include_directories(${PACKAGE} PUBLIC include backend/)
 
-##--- Link libraries
-target_link_libraries(${PACKAGE} ${ROOT_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+#--- Add backend
+add_subdirectory(backend)
 
-###--- Create an executable
+#--- Link libraries
+target_link_libraries(${PACKAGE} Backend ${ROOT_LIBRARIES})
+
+#--- Create an executable
 add_executable(ABSimRun ${CMAKE_SOURCE_DIR}/main/src/ABSim.cpp)
 target_link_libraries(ABSimRun ${PACKAGE})
 
