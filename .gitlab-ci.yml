@@ -13,7 +13,7 @@ variables:
   parallel:
     matrix:
       - TARGET: [CPU, THREADS, OPENMP]
-        BUILD_TYPE: [RelWithDebInfo, Debug]
+        BUILD_TYPE: [RelWithDebInfo, Debug, Release]
 
 .test_job_matrix:
   parallel:
@@ -41,7 +41,7 @@ build:
     - cd ..
   artifacts:
     paths:
-      - build_${TARGET}_${BUILD_TYPE}/ABSimRun
+      - build_${TARGET}_${BUILD_TYPE}/*
     expire_in: 1 week
 
 test:
@@ -60,11 +60,5 @@ run:
     - cvmfs
   script:
     - source /cvmfs/sft.cern.ch/lcg/views/setupViews.sh ${LCG_VERSION} ${LCG_ARCHITECTURE}
-    - - source /cvmfs/sft.cern.ch/lcg/views/setupViews.sh ${LCG_VERSION} ${LCG_ARCHITECTURE}
-    - mkdir build_${TARGET}_${BUILD_TYPE}
-    - cd build_${TARGET}_${BUILD_TYPE}
-    - cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DTARGET_BACKEND=${TARGET} ..
-    - make
-    - cd ..
     - ./build_${TARGET}_${BUILD_TYPE}/ABSimRun
 
