@@ -24,8 +24,8 @@ namespace ABSIM {
     std::string                  name_;
     ParticleProperty<real_t>     mass_;
     ParticleProperty<real_t>     time_;
-    ParticleProperty<int_t>       pid_;
-    ParticleProperty<int_t>       q_;
+    ParticleProperty<int_t>      pid_;
+    ParticleProperty<int_t>      q_;
 
     bool                         stable_;
     int_t                        decay_index_;
@@ -114,6 +114,23 @@ namespace ABSIM {
       org_vertex_ = Vertex();
       end_vertex_ = Vertex();
     }
+
+    inline ParticleProperty<FourVector>& momentum()   { return momentum_; }
+    inline ParticleProperty<Vertex>&     org_vertex() { return org_vertex_; }
+    inline ParticleProperty<Vertex>&     end_vertex() { return end_vertex_; }
+    inline std::string&                  name()       { return name_; }
+    inline ParticleProperty<real_t>&     mass()       { return mass_; }
+    inline ParticleProperty<real_t>&     time()       { return time_; }
+    inline ParticleProperty<int_t>&      pid()        { return pid_; }
+    inline ParticleProperty<int_t>&      q()          { return q_; }
+
+    inline FourVector& momentum(Property::Type type)   { return momentum_(type); }
+    inline Vertex&     org_vertex(Property::Type type) { return org_vertex_(type); }
+    inline Vertex&     end_vertex(Property::Type type) { return end_vertex_(type); }
+    inline real_t&     mass(Property::Type type)       { return mass_(type); }
+    inline real_t&     time(Property::Type type)       { return time_(type); }
+    inline int_t&      pid(Property::Type type)        { return pid_(type); }
+    inline int_t&      q(Property::Type type)          { return q_(type); }
 
 
     real_t FD() { return end_vertex_.generated() - org_vertex_.generated(); }
