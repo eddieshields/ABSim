@@ -24,9 +24,8 @@ variables:
 .run_job_matrix:
   parallel:
     matrix:
-      -TARGET: [CPU, THREADS, OPENMP]
-      BUILD_TYPE:
-        - Release
+      - TARGET: [CPU, THREADS, OPENMP]
+        BUILD_TYPE: Release
 
 build:
   stage: build
