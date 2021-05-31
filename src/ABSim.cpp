@@ -30,5 +30,4 @@ void ABSim::generate()
     events_[i] = Event(descriptor_);
     events_[i].generate();
   }
-  //event->reset();
 }

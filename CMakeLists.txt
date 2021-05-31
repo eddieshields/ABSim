@@ -32,9 +32,13 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -march=native")
 endif()
 
-
-
 set (CMAKE_CXX_STANDARD 17)
+
+#--- Add backend
+add_subdirectory(backend)
+
+#--- Add common
+add_subdirectory(common)
 
 include_directories(include/)
 
@@ -52,15 +56,12 @@ include_directories(${ROOT_INCLUDE_DIRS})
 file(GLOB_RECURSE HEADERS include/*.h)
 file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
-##--- Generate library 
+#--- Generate library 
 add_library(${PACKAGE} SHARED ${SOURCES})
-target_include_directories(${PACKAGE} PUBLIC include backend/)
-
-#--- Add backend
-add_subdirectory(backend)
+target_include_directories(${PACKAGE} PUBLIC include backend/ common/include)
 
 #--- Link libraries
-target_link_libraries(${PACKAGE} Backend ${ROOT_LIBRARIES})
+target_link_libraries(${PACKAGE} Backend Common ${ROOT_LIBRARIES})
 
 #--- Create an executable
 add_executable(ABSimRun ${CMAKE_SOURCE_DIR}/main/src/ABSim.cpp)
