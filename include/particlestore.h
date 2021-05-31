@@ -27,15 +27,10 @@ namespace ABSIM {
   {
   private:
     static TDatabasePDG                            pdg_;
-    static std::map<std::string,BasicParticleInfo> particles_;
 
   public:
-    static BasicParticleInfo& getParticle(std::string name)
+    static BasicParticleInfo getParticle(std::string name)
     {
-      if ( particles_.find( name ) != particles_.end() ) {
-        return particles_[name];
-      }
-
       TParticlePDG* pdg_particle = pdg_.GetParticle(name.c_str());
       if ( pdg_particle == nullptr ) fatal() << "Particle " << name << " is not recognised!" << leave;
 
@@ -46,8 +41,7 @@ namespace ABSIM {
       particle.pid  = pdg_particle->PdgCode();
       particle.q    = pdg_particle->Charge();
 
-      particles_.insert( std::pair<std::string,BasicParticleInfo>( name , std::move( particle ) ) );
-      return particles_[name];
+      return particle;
     }
   };
 
