@@ -11,7 +11,7 @@ int main()
   std::string descriptor_str = "D*+ => { D0 => { K_S0 => pi+ pi- } K+ K- } pi+";
   ABSim simulation( descriptor_str );
 
-  simulation().EvtMax = 1e6;
+  simulation().EvtMax = 1e5;
   simulation.run();
 
   return 0;

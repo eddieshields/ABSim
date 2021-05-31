@@ -21,7 +21,7 @@ void ABSim::run()
   invoke_device_function(func,dim3(configuration_.EvtMax,0,0),dim3(0,0,0));
   func();
   CLOCK_STOP;
-  CLOCK_TASK( "Generate 1M events" );
+  CLOCK_TASK( "Generate 100K events" );
 }
 
 void ABSim::generate()

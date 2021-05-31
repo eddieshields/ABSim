@@ -5,35 +5,60 @@ stages:
   - test
   - run
 
+variables:
+    LCG_VERSION: "LCG_99"
+    LCG_ARCHITECTURE: x86_64-centos7-clang10-opt
+
+.build_job_matrix:
+  parallel:
+    matrix:
+      - TARGET: [CPU, THREADS, OPENMP]
+        BUILD_TYPE: [RelWithDebInfo, Debug, Release]
+
+.test_job_matrix:
+  parallel:
+    matrix:
+      - TARGET: [CPU, THREADS, OPENMP]
+        BUILD_TYPE: [RelWithDebInfo, Debug]
+
+.run_job_matrix:
+  parallel:
+    matrix:
+      - TARGET: [CPU, THREADS, OPENMP]
+        BUILD_TYPE: Release
+
 build:
   stage: build
+  extends: .build_job_matrix
   tags:
     - cvmfs
   script:
-    - source /cvmfs/sft.cern.ch/lcg/views/setupViews.sh LCG_97python3 x86_64-centos7-clang8-opt
-    - mkdir build
-    - cd build
-    - cmake -DBUILD_TESTS=ON ..
+    - source /cvmfs/sft.cern.ch/lcg/views/setupViews.sh ${LCG_VERSION} ${LCG_ARCHITECTURE}
+    - mkdir build_${TARGET}_${BUILD_TYPE}
+    - cd build_${TARGET}_${BUILD_TYPE}
+    - cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DTARGET_BACKEND=${TARGET} ..
     - make
     - cd ..
   artifacts:
     paths:
-      - build/*
+      - build_${TARGET}_${BUILD_TYPE}/*
     expire_in: 1 week
 
 test:
   stage: test
+  extends: .test_job_matrix
   tags:
     - cvmfs
   script:
-    - source /cvmfs/sft.cern.ch/lcg/views/setupViews.sh LCG_97python3 x86_64-centos7-clang8-opt
-    - ./build/tests/Test
+    - source /cvmfs/sft.cern.ch/lcg/views/setupViews.sh ${LCG_VERSION} ${LCG_ARCHITECTURE}
+    - ./build_${TARGET}_${BUILD_TYPE}/ABSimRun
 
 run:
   stage: run
+  extends: .run_job_matrix
   tags:
     - cvmfs
   script:
-    - source /cvmfs/sft.cern.ch/lcg/views/setupViews.sh LCG_97python3 x86_64-centos7-clang8-opt
-    - ./build/ABSimRun
+    - source /cvmfs/sft.cern.ch/lcg/views/setupViews.sh ${LCG_VERSION} ${LCG_ARCHITECTURE}
+    - ./build_${TARGET}_${BUILD_TYPE}/ABSimRun
 
