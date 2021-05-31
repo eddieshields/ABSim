@@ -33,6 +33,7 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 set (CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
 #--- Add backend
 add_subdirectory(backend)
