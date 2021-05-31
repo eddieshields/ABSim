@@ -6,7 +6,7 @@ void Decay::setDecay()
 {
   std::vector<real_t> masses;
   masses.resize( ndaughters_ );
-  for (int i = 0; i < ndaughters_; i++) {
+  for (int_t i = 0; i < ndaughters_; i++) {
     masses[i] = daughters_[i]->mass_(Property::Generated);
     generator_.decProd_[i] = &(daughters_[i]->momentum_(Property::Generated));
   }

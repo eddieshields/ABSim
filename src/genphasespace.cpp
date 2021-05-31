@@ -2,7 +2,7 @@
 
 using namespace ABSIM;
 
-const int MAXP_ = 18;
+const int_t MAXP_ = 18;
 
 int DoubleMax(const void* a, const void* b)
 {
@@ -21,7 +21,7 @@ GenPhaseSpace::GenPhaseSpace(const GenPhaseSpace& gen)
   beta_[0] = gen.beta_[0];
   beta_[1] = gen.beta_[1];
   beta_[2] = gen.beta_[2];
-  for (int i = 0; i < n_; i++) {
+  for (int_t i = 0; i < n_; i++) {
     mass_[i] = gen.mass_[i];
     decProd_[i] = gen.decProd_[i];
   }
@@ -35,20 +35,20 @@ GenPhaseSpace& GenPhaseSpace::operator=(const GenPhaseSpace& gen)
   beta_[0] = gen.beta_[0];
   beta_[1] = gen.beta_[1];
   beta_[2] = gen.beta_[2];
-  for (int i = 0; i < n_; i++) {
+  for (int_t i = 0; i < n_; i++) {
     mass_[i] = gen.mass_[i];
     decProd_[i] = gen.decProd_[i];
   }
   return *this;
 }
 
-FourVector* GenPhaseSpace::GetDecay(int n)
+FourVector* GenPhaseSpace::GetDecay(int_t n)
 {
   if ( n > n_ ) error() << "Bad index " << n << endmsg;
   return decProd_[n];
 }
 
-bool GenPhaseSpace::SetDecay(FourVector& p, int n, const real_t* mass)
+bool GenPhaseSpace::SetDecay(FourVector& p, int_t n, const real_t* mass)
 {
   n_ = n;
 
@@ -56,7 +56,7 @@ bool GenPhaseSpace::SetDecay(FourVector& p, int n, const real_t* mass)
 
   pM_ = teCmTm_ = p.Mag();
 
-  int i;
+  int_t i;
   for (i = 0; i < n_; i++) {
     mass_[i] = mass[i];
     teCmTm_ -= mass[i];
@@ -100,7 +100,7 @@ bool GenPhaseSpace::UpdateDecay(FourVector& p)
   real_t emmin = 0.;
   real_t wtmax = 1.;
 
-  for (int i = 1; i < n_; i++) {
+  for (int_t i = 1; i < n_; i++) {
     emmin += mass_[i-1];
     emmax += mass_[i];
     wtmax *= pdk_(emmax, emmin, mass_[i]);
@@ -123,7 +123,7 @@ real_t GenPhaseSpace::Generate()
 {
   real_t rno[MAXP_];
   rno[0] = 0;
-  int n;
+  int_t n;
   if ( n_ > 2 ) {
     for (n = 1; n < n_; n++) rno[n] = Random::Rnd();
     qsort(rno+1, n_ - 2, sizeof(real_t), DoubleMax);
@@ -145,8 +145,8 @@ real_t GenPhaseSpace::Generate()
 
   decProd_[0]->SetPxPyPzE( 0 , pd[0] , 0 , std::sqrt( ( pd[0] * pd[0] ) + ( mass_[0] * mass_[0] ) ) );
 
-  int i = 1;
-  int j;
+  int_t i = 1;
+  int_t j;
   while (1) {
     decProd_[i]->SetPxPyPzE( 0 , -pd[i-1] , 0 , std::sqrt( ( pd[i-1] * pd[i-1] ) + ( mass_[i] * mass_[i] ) ) );
 

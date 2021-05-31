@@ -11,12 +11,12 @@
 
 namespace ABSIM {
 
-  const int MAXP_ = 18;
+  const int_t MAXP_ = 18;
 
   /**
    * Decay
    * 
-   * Class to represent the decay of a particle into N other particles.
+   * Class to represent the decay of a particle int_to N other particles.
    * 
    * @author Edward Shields
    * @date 11/05/2021
@@ -26,7 +26,7 @@ namespace ABSIM {
   private:
     Particle* mother_;
     Particle* daughters_[MAXP_];
-    int       ndaughters_;
+    int_t       ndaughters_;
 
     GenPhaseSpace          generator_;
 
@@ -39,7 +39,7 @@ namespace ABSIM {
     {
       mother_ = particles + info.mother;
       ndaughters_ = info.ndaughters;
-      for(int i = 0; i < info.ndaughters; i++) {
+      for(int_t i = 0; i < info.ndaughters; i++) {
         daughters_[i] = particles + info.daughters[i];
       }
       setDecay();

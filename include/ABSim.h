@@ -12,8 +12,8 @@ namespace ABSIM {
 
   struct ABSimConfiguration
   {
-    int EvtMax = {1000};
-    int NThreads = {1};
+    int_t EvtMax = {1000};
+    int_t NThreads = {1};
   };
 
   class ABSim

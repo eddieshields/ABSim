@@ -17,8 +17,10 @@ namespace ABSIM {
     std::string name;
     real_t      mass;
     real_t      time;
-    int         pid;
-    int         q;
+    int_t         pid;
+    int_t         q;
+    bool        stable;
+    int_t decay_index;
   };
 
   class ParticleStore

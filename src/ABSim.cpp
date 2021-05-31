@@ -4,11 +4,11 @@ using namespace ABSIM;
 
 void ABSim::allocateMemory()
 {
-  int nEv = configuration_.EvtMax;
+  int_t nEv = configuration_.EvtMax;
   MemoryManager<Event>::request( nEv );
-  int nP = descriptor_.nparticles() * nEv;
+  int_t nP = descriptor_.nparticles() * nEv;
   MemoryManager<Particle>::request( nP );
-  int nD = descriptor_.ndecays() * nEv;
+  int_t nD = descriptor_.ndecays() * nEv;
   MemoryManager<Decay>::request( nD );
 }
 
@@ -26,7 +26,7 @@ void ABSim::run()
 
 void ABSim::generate()
 {
-  for (int i = blockIdx.x; i < configuration_.EvtMax ; i += blockDim.x) {
+  for (int_t i = blockIdx.x; i < configuration_.EvtMax ; i += blockDim.x) {
     events_[i] = Event(descriptor_);
     events_[i].generate();
   }

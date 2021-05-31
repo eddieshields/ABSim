@@ -3,12 +3,11 @@
 
 #include <cstddef> // std::size_t.
 #include <complex>
-#include <xmmintrin.h> // Intrinsics.
-#include <smmintrin.h>
 
 namespace ABSIM {
 
   using real_t = float;
+  using int_t = unsigned int;
   using complex_t = std::complex<float>;
   using size_t = std::size_t;
 

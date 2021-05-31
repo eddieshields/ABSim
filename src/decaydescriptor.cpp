@@ -2,9 +2,16 @@
 
 using namespace ABSIM;
 
-void DecayDescriptor::getParticleInfo(std::string name)
+void DecayDescriptor::getParticleInfo(std::string name, bool decay_particle)
 {
   BasicParticleInfo info = ParticleStore::getParticle( name );
+  if ( decay_particle ) {
+    info.stable = false;
+    info.decay_index = currentDecayIndex();
+  } else {
+    info.stable = true;
+    info.decay_index = 0;
+  }
   particle_info_.push_back( info  );
   return;
 }
@@ -54,7 +61,7 @@ void DecayDescriptor::decodeDecay(std::string decay)
 
     // Add particle.
     particles_.push_back( entry );
-    getParticleInfo( entry );
+    getParticleInfo( entry , decay_particle );
 
     // First particle must be head.
     if ( head_ == "" ) {
@@ -82,11 +89,11 @@ void DecayDescriptor::decodeDecay(std::string decay)
     subdecay->addDecay( currentIndex() , nullptr );
   }
   
-  for (int i = 0; i < subdecays_.size(); i++) {
+  for (int_t i = 0; i < subdecays_.size(); i++) {
     DecayInfo info;
     info.ndaughters = subdecays_[i]->particles_.size() - 1;
     info.mother = subdecays_[i]->indices_[0];
-    for (int j = 1; j < subdecays_[i]->particles_.size(); j++) {
+    for (int_t j = 1; j < subdecays_[i]->particles_.size(); j++) {
       info.daughters.push_back( subdecays_[i]->indices_[j] );
     }
     decay_info_.push_back( std::move( info ) );
@@ -94,13 +101,13 @@ void DecayDescriptor::decodeDecay(std::string decay)
   return;
 }
 
-std::string DecayDescriptor::print_subdecay(std::string& out, SubDecayDescriptor* subdecay) const
+std::string DecayDescriptor::print_t_subdecay(std::string& out, SubDecayDescriptor* subdecay) const
 {
   out += "{ " + subdecay->particles_.front() + " => ";
-  for (unsigned int i = 1; i < subdecay->particles_.size(); ++i) {
-    int index = subdecay->indices_[i];
+  for (int_t i = 1; i < subdecay->particles_.size(); ++i) {
+    int_t index = subdecay->indices_[i];
     if ( subdecay->decays_[index] != nullptr ) {
-      print_subdecay(out, subdecay->decays_[index]);
+      print_t_subdecay(out, subdecay->decays_[index]);
     } else {
       out += subdecay->particles_[i] + " ";
     }
@@ -114,10 +121,10 @@ std::string DecayDescriptor::decay_string() const
   std::string out = "";
   SubDecayDescriptor* subdecay = subdecays_.front();
   out += subdecay->particles_.front() + " => ";
-  for (unsigned int i = 1; i < subdecay->particles_.size(); ++i) {
-    int index = subdecay->indices_[i];
+  for (int_t i = 1; i < subdecay->particles_.size(); ++i) {
+    int_t index = subdecay->indices_[i];
     if ( subdecay->decays_[index] != nullptr ) {
-      print_subdecay(out, subdecay->decays_[index]);
+      print_t_subdecay(out, subdecay->decays_[index]);
     } else {
       out += subdecay->particles_[i] + " ";
     }
@@ -125,7 +132,7 @@ std::string DecayDescriptor::decay_string() const
   return out;
 }
 
-void DecayDescriptor::Print() const
+void DecayDescriptor::Print_t() const
 {
   std::cout << decay_string() << std::endl;
 }

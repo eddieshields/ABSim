@@ -17,7 +17,7 @@ namespace ABSIM {
     static std::uniform_real_distribution<real_t>  uniform_;
     static std::exponential_distribution <real_t>  exponential_;
     static std::normal_distribution      <real_t>  normal_;
-    static std::uniform_int_distribution <int>     integer_;
+    static std::uniform_int_distribution <int_t>   integer_;
 
   public:
     inline static std::mt19937_64& engine()
@@ -50,7 +50,7 @@ namespace ABSIM {
       return mu + sigma * normal_( engine() );
     }
   
-    inline static const int integer( const int& a = 0, const int& b = 1 )
+    inline static const int_t int_teger( const int_t& a = 0, const int_t& b = 1 )
     {
       return integer_( engine() );
     }

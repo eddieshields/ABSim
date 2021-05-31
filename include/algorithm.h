@@ -2,6 +2,7 @@
 #define ABSIM_ALGORITHM_H
 
 #include "backend.h"
+#include "event.h"
 
 #include <string>
 
@@ -23,6 +24,9 @@ namespace ABSIM {
 
     __device__
     void shutdown() {}
+
+    __device__
+    virtual void operator()(Event& ev) = 0;
   };
 
 } // namespace ABSIM

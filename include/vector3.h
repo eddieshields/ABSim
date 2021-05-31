@@ -22,11 +22,11 @@ namespace ABSIM {
     inline Vector3 operator=(const Vector3&);
 
     // Getters.
-    inline real_t operator()(int) const;
-    inline real_t operator[](int) const;
+    inline real_t operator()(int_t) const;
+    inline real_t operator[](int_t) const;
 
-    inline real_t& operator()(int);
-    inline real_t& operator[](int);
+    inline real_t& operator()(int_t);
+    inline real_t& operator[](int_t);
 
     inline real_t x()  const;
     inline real_t y()  const;
@@ -91,7 +91,7 @@ namespace ABSIM {
     return *this;
   }
 
-  inline real_t Vector3::operator()(int i) const
+  inline real_t Vector3::operator()(int_t i) const
   {
     switch(i) {
       case 0:
@@ -106,7 +106,7 @@ namespace ABSIM {
     return 0.;
   }
 
-  inline real_t& Vector3::operator()(int i)
+  inline real_t& Vector3::operator()(int_t i)
   {
     switch(i) {
       case 0:
@@ -121,7 +121,7 @@ namespace ABSIM {
     return x_;
   }
 
-  inline real_t Vector3::operator[](int i) const
+  inline real_t Vector3::operator[](int_t i) const
   {
     switch(i) {
       case 0:
@@ -136,7 +136,7 @@ namespace ABSIM {
     return 0.;
   }
 
-  inline real_t& Vector3::operator[](int i)
+  inline real_t& Vector3::operator[](int_t i)
   {
     switch(i) {
       case 0:

@@ -9,7 +9,7 @@ Event::Event(const DecayDescriptor& descriptor)
   particles_ = new Particle[n_];
   decays_ = new Decay[ndecays_];
 
-  int i = 0;
+  int_t i = 0;
   for (i = 0; i < n_; i++) {
     particles_[i].construct( descriptor.particles()[i] );
   }
@@ -24,14 +24,23 @@ Event::Event(const DecayDescriptor& descriptor)
 
 void Event::reset()
 {
-  for (int i = 0; i < n_; i++) {
+  for (int_t i = 0; i < n_; i++) {
     particles_[i].reset();
   }
 }
 
 void Event::generate()
 {
-  for (int i = 0; i < ndecays_; i++) {
+  for (int_t i = 0; i < ndecays_; i++) {
     decays_[i].generateDecay();
+  }
+}
+
+void Event::reDecay(const int_t& i)
+{
+  decays_[i].generateDecay();
+  for (int_t j = 0; j < decays_[i].ndaughters_; j++) {
+    if ( decays_[i].daughters_[j]->stable_ ) continue;
+    reDecay( decays_[i].daughters_[j]->decay_index_ );
   }
 }

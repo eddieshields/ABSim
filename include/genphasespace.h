@@ -15,7 +15,7 @@ namespace ABSIM {
   {
   friend class Decay;
   private: 
-    int n_;
+    int_t n_;
     real_t mass_[18];
     real_t beta_[3];
     real_t teCmTm_;
@@ -37,12 +37,12 @@ namespace ABSIM {
     ~GenPhaseSpace() {}
     GenPhaseSpace& operator=(const GenPhaseSpace& gen);
 
-    bool SetDecay(FourVector& p, int n, const real_t* mass);
+    bool SetDecay(FourVector& p, int_t n, const real_t* mass);
     bool UpdateDecay(FourVector& p);
     real_t Generate();
-    FourVector* GetDecay(int n);
+    FourVector* GetDecay(int_t n);
 
-    inline int GetN() const { return n_; }
+    inline int_t GetN() const { return n_; }
     inline real_t GetWtMax() const { return wtMax_; }
   };
 

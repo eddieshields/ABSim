@@ -6,6 +6,7 @@
 #include "beam.h"
 #include "decaydescriptor.h"
 #include "memorymanager.h"
+#include "msgservice.h"
 
 #include <vector>
 
@@ -14,8 +15,8 @@ namespace ABSIM {
   class Event
   {
   private:
-    int       n_;
-    int       ndecays_;
+    int_t       n_;
+    int_t       ndecays_;
     Particle* particles_;
     Decay*    decays_;
 
@@ -29,6 +30,22 @@ namespace ABSIM {
     void reset();
 
     void generate();
+
+    void reDecay(const int_t& i);
+
+    // Getters.
+    Particle* particles() { return particles_; }
+    Particle& particle(const int_t i)
+    {
+      if ( i > n_ ) error() << "Bad index " << i << leave;
+      return particles_[i];
+    }
+    Decay*    decays()    { return decays_; }
+    Decay&    decay(const int_t i)
+    {
+      if ( i > ndecays_ ) error() << "Bad index " << i << leave;
+      return decays_[i];
+    }
 
     /*
     void* operator new (size_t size)

@@ -23,11 +23,11 @@ namespace ABSIM {
     inline FourVector operator=(const FourVector&);
 
     // Getters.
-    inline real_t operator()(int) const;
-    inline real_t operator[](int) const;
+    inline real_t operator()(int_t) const;
+    inline real_t operator[](int_t) const;
 
-    inline real_t& operator()(int);
-    inline real_t& operator[](int);
+    inline real_t& operator()(int_t);
+    inline real_t& operator[](int_t);
 
     inline real_t x()  const;
     inline real_t y()  const;
@@ -105,7 +105,7 @@ namespace ABSIM {
     return *this;
   }
 
-  inline real_t FourVector::operator()(int i) const
+  inline real_t FourVector::operator()(int_t i) const
   {
     switch(i) {
       case 0:
@@ -122,12 +122,12 @@ namespace ABSIM {
     return 0.;
   }
 
-  inline real_t FourVector::operator[](int i) const
+  inline real_t FourVector::operator[](int_t i) const
   {
     return (*this)(i);
   }
 
-  inline real_t& FourVector::operator()(int i)
+  inline real_t& FourVector::operator()(int_t i)
   {
     switch(i) {
       case 0:
@@ -144,7 +144,7 @@ namespace ABSIM {
     return e_;
   }
 
-  inline real_t& FourVector::operator[](int i)
+  inline real_t& FourVector::operator[](int_t i)
   {
     return (*this)(i);
   }

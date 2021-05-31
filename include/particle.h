@@ -24,13 +24,16 @@ namespace ABSIM {
     std::string                  name_;
     ParticleProperty<real_t>     mass_;
     ParticleProperty<real_t>     time_;
-    ParticleProperty<int>        pid_;
-    ParticleProperty<int>        q_;
+    ParticleProperty<int_t>       pid_;
+    ParticleProperty<int_t>       q_;
+
+    bool                         stable_;
+    int_t                        decay_index_;
 
   public:
     static std::string NAME() { return "Particle"; }
     Particle() = default;
-    Particle(std::string name, real_t mass, real_t time, int pid, int q) :
+    Particle(std::string name, real_t mass, real_t time, int_t pid, int_t q) :
       momentum_(),
       org_vertex_(),
       end_vertex_(),
@@ -48,7 +51,9 @@ namespace ABSIM {
       mass_( rhs.mass_ ),
       time_( rhs.time_ ),
       pid_( rhs.pid_ ),
-      q_( rhs.q_ )
+      q_( rhs.q_ ),
+      stable_( rhs.stable_ ),
+      decay_index_( rhs.decay_index_ )
     {}
     Particle(const BasicParticleInfo& info) :
       momentum_(),
@@ -58,7 +63,9 @@ namespace ABSIM {
       mass_( info.mass ),
       time_( info.time ),
       pid_( info.pid ),
-      q_( info.q )
+      q_( info.q ),
+      stable_( info.stable ),
+      decay_index_( info.decay_index )
     {}
     ~Particle() {}
 
@@ -72,6 +79,8 @@ namespace ABSIM {
       time_ = rhs.time_;
       pid_ = rhs.pid_;
       q_ = rhs.q_;
+      stable_ = rhs.stable_;
+      decay_index_ = rhs.decay_index_;
       return *this;
     }
     Particle& operator=(const BasicParticleInfo& rhs)
@@ -81,6 +90,8 @@ namespace ABSIM {
       time_ = rhs.time;
       pid_ = rhs.pid;
       q_ = rhs.q;
+      stable_ = rhs.stable;
+      decay_index_ = rhs.decay_index;
       return *this;
     }
 
@@ -93,6 +104,8 @@ namespace ABSIM {
       time_ = info.time;
       pid_ = info.pid;
       q_ = info.q;
+      stable_ = info.stable;
+      decay_index_ = info.decay_index;
     }
 
     void reset()
