@@ -5,7 +5,6 @@
 #include "decay.h"
 #include "beam.h"
 #include "decaydescriptor.h"
-#include "memorymanager.h"
 #include "msgservice.h"
 
 #include <vector>
@@ -37,32 +36,15 @@ namespace ABSIM {
     Particle* particles() { return particles_; }
     Particle& particle(const int_t i)
     {
-      if ( i > n_ ) error() << "Bad index " << i << leave;
+      if ( i > n_ ) warning() << "Bad index " << i << leave;
       return particles_[i];
     }
     Decay*    decays()    { return decays_; }
     Decay&    decay(const int_t i)
     {
-      if ( i > ndecays_ ) error() << "Bad index " << i << leave;
+      if ( i > ndecays_ ) warning() << "Bad index " << i << leave;
       return decays_[i];
     }
-
-    /*
-    void* operator new (size_t size)
-    {
-      return MemoryManager<Event>::allocate( size );
-    }
-
-    void* operator new[] (size_t size)
-    {
-      return MemoryManager<Event>::allocate( size );
-    }
-
-    void operator delete (void* deleted)
-    {
-      MemoryManager<Event>::free( deleted );
-    }
-    */
   };
 
 } // namespace ABSIM

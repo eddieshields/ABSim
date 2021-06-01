@@ -5,7 +5,6 @@
 #include "particleproperty.h"
 #include "vertex.h"
 #include "fourvector.h"
-#include "memorymanager.h"
 #include "particlestore.h"
 
 #include <string>
@@ -134,23 +133,6 @@ namespace ABSIM {
 
 
     real_t FD() { return end_vertex_.generated() - org_vertex_.generated(); }
-
-    /*
-    void* operator new (size_t size)
-    {
-      return MemoryManager<Particle>::allocate( size );
-    }
-
-    void* operator new[] (size_t size)
-    {
-      return MemoryManager<Particle>::allocate( size );
-    }
-    
-    void operator delete (void* deleted)
-    {
-      MemoryManager<Particle>::free( deleted );
-    }
-    */
 
   };
 

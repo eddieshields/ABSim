@@ -41,6 +41,9 @@ add_subdirectory(backend)
 #--- Add common
 add_subdirectory(common)
 
+#--- Add Algorithms
+add_subdirectory(eventmodel)
+
 include_directories(include/)
 
 #--- Tell CMake where to find ROOT.
@@ -59,10 +62,10 @@ file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
 #--- Generate library 
 add_library(${PACKAGE} SHARED ${SOURCES})
-target_include_directories(${PACKAGE} PUBLIC include backend/ common/include)
+target_include_directories(${PACKAGE} PUBLIC include backend/ common/include eventmodel/include)
 
 #--- Link libraries
-target_link_libraries(${PACKAGE} Backend Common ${ROOT_LIBRARIES})
+target_link_libraries(${PACKAGE} Backend Common EventModel ${ROOT_LIBRARIES})
 
 #--- Create an executable
 add_executable(ABSimRun ${CMAKE_SOURCE_DIR}/main/src/ABSim.cpp)

@@ -75,43 +75,48 @@ namespace MSGSERVICE {
 
 #if defined (Debug) || (RelWithDebInfo)
   #define debug_stream std::cout
-  #define prefix "[" << MSGSERVICE::detail::trimmedFile( __FILE__ ) << ", L" << __LINE__ << "] "                   \
+  #define msgprefix "[" << MSGSERVICE::detail::trimmedFile( __FILE__ ) << ", L" << __LINE__ << "] "                   \
     << std::left << std::setw( FCNNAMELENGTH ) << MSGSERVICE::detail::trimmedString( __PRETTY_FUNCTION__ ) << "  "
 #else
   #define debug_stream MSGSERVICE::null_stream
-  #define prefix ""
+  #define msgprefix ""
 #endif
 
-#define info()                        \
-  std::cout << "\033[2;34m" << prefix \
-  << "INFO         "                  \
-  << "\033[0m"
+#ifndef info
+  #define info()                        \
+    std::cout << "\033[2;34m" << msgprefix \
+    << "INFO         "                  \
+    << "\033[0m"
+#endif
 
+#ifndef debug
+  #define debug()                          \
+    debug_stream << "\033[2;32m" << msgprefix \
+    << "DEBUG        "                     \
+    << "\033[0m"
+#endif
 
-#define debug()                          \
-  debug_stream << "\033[2;32m" << prefix \
-  << "DEBUG        "                     \
-  << "\033[0m"
+#ifndef warning
+  #define warning()                     \
+    std::cout << "\033[1;35m" << msgprefix \
+    << "WARNING      "                  \
+    << "\033[0m" 
+#endif
 
+#ifndef fatal
+  #define fatal()                       \
+    std::cout << "\033[1;31m" << msgprefix \
+    << "  FATAL        "                \
+    << "\033[0m"
+#endif
 
-#define warning()                     \
-  std::cout << "\033[1;35m" << prefix \
-  << "WARNING      "                  \
-  << "\033[0m" 
+#ifndef endmsg
+  #define endmsg "\n"
+#endif
 
-#define error()                       \
-  std::cout << "\033[1;31m" << prefix \
-  << "ERROR        "                  \
-  << "\033[0m"
-
-#define fatal()                       \
-  std::cout << "\033[1;31m" << prefix \
-  << "  FATAL        "                \
-  << "\033[0m"
-
-#define endmsg "\n"
-
-#define leave "\n"
+#ifndef leave
+  #define leave "\n"
+#endif
 
 //throw std::runtime_error( trimmedString( __PRETTY_FUNCTION__)+ " FATAL" )
 

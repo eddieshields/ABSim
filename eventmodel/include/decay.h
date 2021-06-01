@@ -4,7 +4,6 @@
 #include "particle.h"
 #include "decaydescriptor.h"
 #include "genphasespace.h"
-#include "memorymanager.h"
 
 #include <array>
 #include <vector>
@@ -26,7 +25,7 @@ namespace ABSIM {
   private:
     Particle* mother_;
     Particle* daughters_[MAXP_];
-    int_t       ndaughters_;
+    int_t     ndaughters_;
 
     GenPhaseSpace          generator_;
 
@@ -49,22 +48,7 @@ namespace ABSIM {
 
     void generateDecay();
 
-    /*
-    void* operator new (size_t size)
-    {
-      return MemoryManager<Decay>::allocate( size );
-    }
-
-    void* operator new[] (size_t size)
-    {
-      return MemoryManager<Decay>::allocate( size );
-    }
-
-    void operator delete (void* deleted)
-    {
-      MemoryManager<Decay>::free( deleted );
-    }
-    */
+    Particle* daughter(const int_t& i) { return daughters_[i]; } 
   };
 
 } // namespace ABSIM

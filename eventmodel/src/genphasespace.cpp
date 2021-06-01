@@ -44,7 +44,7 @@ GenPhaseSpace& GenPhaseSpace::operator=(const GenPhaseSpace& gen)
 
 FourVector* GenPhaseSpace::GetDecay(int_t n)
 {
-  if ( n > n_ ) error() << "Bad index " << n << endmsg;
+  if ( n > n_ ) warning() << "Bad index " << n << endmsg;
   return decProd_[n];
 }
 
