@@ -14,8 +14,8 @@ namespace ABSIM {
   class Event
   {
   private:
-    int_t       n_;
-    int_t       ndecays_;
+    int_t     n_;
+    int_t     ndecays_;
     Particle* particles_;
     Decay*    decays_;
 

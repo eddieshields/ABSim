@@ -2,17 +2,11 @@
 #define ABSIM_PARTICLEPROPERTY_H
 
 #include "types.h"
+#include "properties.h"
 
 #include <tuple>
 
 namespace ABSIM {
-
-  struct Property {
-    enum Type {
-      Generated,
-      Reconstructed
-    };
-  };
 
   template <typename T>
   struct ParticleProperty {    

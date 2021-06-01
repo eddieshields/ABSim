@@ -48,7 +48,13 @@ namespace ABSIM {
 
     void generateDecay();
 
-    Particle* daughter(const int_t& i) { return daughters_[i]; } 
+    Particle* mother() { return mother_; }
+
+    Particle* daughter(const int_t& i)
+    { 
+      if ( i > ndaughters_ ) warning() << "Bad index " << i << endmsg;
+      return daughters_[i];
+    } 
   };
 
 } // namespace ABSIM

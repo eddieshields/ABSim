@@ -41,8 +41,11 @@ add_subdirectory(backend)
 #--- Add common
 add_subdirectory(common)
 
-#--- Add Algorithms
+#--- Add eventmodel
 add_subdirectory(eventmodel)
+
+#--- Add algorithms
+add_subdirectory(algorithms)
 
 include_directories(include/)
 
@@ -65,7 +68,7 @@ add_library(${PACKAGE} SHARED ${SOURCES})
 target_include_directories(${PACKAGE} PUBLIC include backend/ common/include eventmodel/include)
 
 #--- Link libraries
-target_link_libraries(${PACKAGE} Backend Common EventModel ${ROOT_LIBRARIES})
+target_link_libraries(${PACKAGE} Backend Common EventModel Algorithms ${ROOT_LIBRARIES})
 
 #--- Create an executable
 add_executable(ABSimRun ${CMAKE_SOURCE_DIR}/main/src/ABSim.cpp)
