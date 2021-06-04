@@ -12,12 +12,11 @@
 
 namespace ABSIM {
 
-  template <typename EVENT>
-  class Decay3Body : public Algorithm<EVENT>
+  class Decay3Body : public Algorithm
   {
   public:
     Decay3Body(std::string name, int_t index, real_t max, std::string cfgfile) :
-      Algorithm<EVENT>(name),
+      Algorithm(name),
       index_( index ),
       max_( max )
     {
@@ -26,7 +25,7 @@ namespace ABSIM {
     }
     ~Decay3Body() {}
   
-    void operator() (EVENT& ev) final
+    void operator() (Event& ev) final
     {
       auto& decay = ev.decay( index_ );
       real_t mSq12, mSq13;

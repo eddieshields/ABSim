@@ -47,6 +47,9 @@ add_subdirectory(eventmodel)
 #--- Add algorithms
 add_subdirectory(algorithms)
 
+#--- Add tupling
+add_subdirectory(tupling)
+
 include_directories(include/)
 
 #--- Tell CMake where to find ROOT.
@@ -60,15 +63,19 @@ include(${ROOT_USE_FILE})
 include_directories(${ROOT_INCLUDE_DIRS})
 
 #--- Define the header and src directories
-file(GLOB_RECURSE HEADERS include/*.h)
-file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp)
+file(GLOB_RECURSE HEADERS include/*.h common/include/*h eventmodel/include/*h tupling/include/*h)
+file(GLOB_RECURSE SOURCES src/*.cpp)
 
 #--- Generate library 
+#ROOT_GENERATE_DICTIONARY(G__${PACKAGE} ${HEADERS} LINKDEF dict/${PACKAGE}LinkDef.h)
+
+#--- Generate library with ROOT dictionary
+#add_library(${PACKAGE} STATIC ${SOURCES} ${} G__${PACKAGE}.cxx)
 add_library(${PACKAGE} SHARED ${SOURCES})
-target_include_directories(${PACKAGE} PUBLIC include backend/ common/include eventmodel/include)
+target_include_directories(${PACKAGE} PUBLIC include backend/ common/include eventmodel/include tupling/include)
 
 #--- Link libraries
-target_link_libraries(${PACKAGE} Backend Common EventModel Algorithms ${ROOT_LIBRARIES})
+target_link_libraries(${PACKAGE} Backend Common EventModel Algorithms Tupling ${ROOT_LIBRARIES})
 
 #--- Create an executable
 add_executable(ABSimRun ${CMAKE_SOURCE_DIR}/main/src/ABSim.cpp)

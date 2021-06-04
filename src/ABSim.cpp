@@ -22,12 +22,28 @@ void ABSim::run()
   func();
   CLOCK_STOP;
   CLOCK_TASK( "Generate 100K events" );
+  writer_.addParticleEntry("D0","MSq",1);
+  CLOCK_START;
+  fillTree();
+  CLOCK_STOP;
+  CLOCK_TASK("Fill tree with 100K events");
+  writer_.tree()->Print();
 }
+
 
 void ABSim::generate()
 {
   for (int_t i = blockIdx.x; i < configuration_.EvtMax ; i += blockDim.x) {
-    events_[i] = Event(descriptor_);
-    events_[i].generate();
+    Event& ev = events_[i];
+    ev = Event(descriptor_);
+    ev.generate();
+    sequence_( ev );
+  }
+}
+
+void ABSim::fillTree()
+{
+  for(int_t i = 0; i < configuration_.EvtMax; i++) {
+    writer_.fill( events_[i] );
   }
 }

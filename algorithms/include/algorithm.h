@@ -1,11 +1,13 @@
 #ifndef ABSIM_ALGORITHM_H
 #define ABSIM_ALGORITHM_H
 
+#include "event.h"
+
 #include <string>
+#include <memory>
 
 namespace ABSIM {
 
-  template <typename EVENT>
   class Algorithm
   {
   private:
@@ -13,15 +15,19 @@ namespace ABSIM {
     
   public:
     Algorithm(std::string name) :
-      name_( name )
+      name_( name ),
+      next( nullptr )
     {}
-    ~Algorithm() {}
+    virtual ~Algorithm() {}
+
+    std::unique_ptr<Algorithm> next;
 
     void init() {}
 
     void shutdown() {}
 
-    virtual void operator()(EVENT& ev) = 0;
+    virtual void operator()(Event& ev) = 0;
+
   };
 
 } // namespace ABSIM

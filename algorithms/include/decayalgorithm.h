@@ -2,28 +2,28 @@
 #define ABSIM_DECAYALGORITHM_H
 
 #include "algorithm.h"
+#include "decay.h"
 #include "types.h"
 
 namespace ABSIM {
   
-  template <typename EVENT, typename DECAY>
-  class DecayAlgorithm : public Algorithm<EVENT>
+  class DecayAlgorithm : public Algorithm
   {
   private:
     int_t index_;
   public:
     DecayAlgorithm(std::string name, const int_t index) :
-      Algorithm<EVENT>( name ),
+      Algorithm( name ),
       index_( index )
     {}
     ~DecayAlgorithm() {}
 
-    void operator()(EVENT& ev) override final
+    void operator()(Event& ev) override final
     {
       (*this)(ev.decay(index_));
     }
 
-    virtual void operator()(DECAY& decay) = 0;
+    virtual void operator()(Decay& decay) = 0;
   };
 
 } // namespace ABSIM

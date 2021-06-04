@@ -7,6 +7,8 @@
 #include "msgservice.h"
 #include "backend.h"
 #include "clock.h"
+#include "sequence.h"
+#include "treewriter.h"
 
 namespace ABSIM {
 
@@ -19,6 +21,8 @@ namespace ABSIM {
   class ABSim
   {
   private:
+    Sequence           sequence_;
+    TreeWriter         writer_;         
     Event*             events_;
     ABSimConfiguration configuration_;
     DecayDescriptor    descriptor_;
@@ -26,9 +30,11 @@ namespace ABSIM {
     void allocateMemory();
 
   public:
-    ABSim()
+    ABSim() :
+      writer_("test.root","test.root")
     {};
     ABSim(std::string decay) :
+      writer_("test.root","test.root"),
       descriptor_( decay )
     {}
     ~ABSim() {}
@@ -37,6 +43,7 @@ namespace ABSIM {
 
     void run();
     void generate();
+    void fillTree();
   };
 
 }  // namespace ABSIM

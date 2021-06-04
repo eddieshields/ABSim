@@ -1,8 +1,13 @@
 #--- Add models
 add_subdirectory(${CMAKE_SOURCE_DIR}/models ${CMAKE_BINARY_DIR}/models)
 
+list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
+find_package(ROOT REQUIRED COMPONENTS Core Tree)
+include(${ROOT_USE_FILE})
+include_directories(${ROOT_INCLUDE_DIRS})
+
 #--- Build EventModel library
 file(GLOB algorithm_sources "src/*cpp")
 add_library(Algorithms STATIC ${algorithm_sources})
-target_include_directories(Algorithms PUBLIC include ${CMAKE_SOURCE_DIR}/common/include)
-target_link_libraries(Algorithms DalitzModel Common)
+target_include_directories(Algorithms PUBLIC include ${CMAKE_SOURCE_DIR}/common/include ${CMAKE_SOURCE_DIR}/eventmodel/include)
+target_link_libraries(Algorithms DalitzModel)

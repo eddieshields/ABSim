@@ -3,27 +3,27 @@
 
 #include "algorithm.h"
 #include "types.h"
+#include "particle.h"
 
 namespace ABSIM {
   
-  template <typename EVENT, typename PARTICLE>
-  class ParticleAlgorithm : public Algorithm<EVENT>
+  class ParticleAlgorithm : public Algorithm
   {
   private:
     int_t index_;
   public:
     ParticleAlgorithm(std::string name, const int_t index) :
-      Algorithm<EVENT>( name ),
+      Algorithm( name ),
       index_( index )
     {}
     ~ParticleAlgorithm() {}
 
-    void operator()(EVENT& ev) override final
+    void operator()(Event& ev) override final
     {
       (*this)(ev.particle(index_));
     }
 
-    virtual void operator()(PARTICLE& particle) = 0;
+    virtual void operator()(Particle& particle) = 0;
   };
 
 } // namespace ABSIM
