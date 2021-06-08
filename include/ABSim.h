@@ -9,6 +9,8 @@
 #include "clock.h"
 #include "sequence.h"
 #include "treewriter.h"
+#include "configservice.h"
+#include "tupleservice.h"
 
 namespace ABSIM {
 
@@ -18,9 +20,14 @@ namespace ABSIM {
     int_t NThreads = {1};
   };
 
+  class ConfigSvc;
   class ABSim
   {
+  friend class ConfigSvc;
+  friend class TupleSvc;
   private:
+    ConfigSvc          cfgsvc_;
+    TupleSvc           tupsvc_;
     Sequence           sequence_;
     TreeWriter         writer_;         
     Event*             events_;
@@ -31,9 +38,13 @@ namespace ABSIM {
 
   public:
     ABSim() :
+      cfgsvc_( this ),
+      tupsvc_( this ),
       writer_("test.root","test.root")
     {};
     ABSim(std::string decay) :
+      cfgsvc_( this ),
+      tupsvc_( this ),
       writer_("test.root","test.root"),
       descriptor_( decay )
     {}

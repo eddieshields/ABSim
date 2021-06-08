@@ -22,7 +22,9 @@ void ABSim::run()
   func();
   CLOCK_STOP;
   CLOCK_TASK( "Generate 100K events" );
-  writer_.addParticleEntry("D0","MSq",1);
+  //tupsvc_.addEntry( "D0" , M2 , 1 );
+  tupsvc_.addFunction<M2>();
+  //writer_.addParticleEntry("D0","MSq",1);
   CLOCK_START;
   fillTree();
   CLOCK_STOP;

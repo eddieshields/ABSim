@@ -75,6 +75,7 @@ namespace ABSIM {
     inline real_t M2() const;
     inline real_t Perp2() const;
     inline real_t Perp() const;
+    inline real_t P() const;
     inline real_t Pt() const;
     inline real_t Beta() const;
     inline real_t Gamma() const;
@@ -306,6 +307,11 @@ namespace ABSIM {
   inline real_t FourVector::Perp() const
   {
     return p_.Perp();
+  }
+
+  inline real_t FourVector::P() const
+  {
+    return p_.Mag();
   }
 
   inline real_t FourVector::Pt() const

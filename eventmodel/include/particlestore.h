@@ -17,16 +17,16 @@ namespace ABSIM {
     std::string name;
     real_t      mass;
     real_t      time;
-    int_t         pid;
-    int_t         q;
+    int_t       pid;
+    int_t       q;
+    int_t       decay_index;
     bool        stable;
-    int_t decay_index;
   };
 
   class ParticleStore
   {
   private:
-    static TDatabasePDG                            pdg_;
+    static TDatabasePDG pdg_;
 
   public:
     static BasicParticleInfo getParticle(std::string name)

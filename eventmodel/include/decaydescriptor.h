@@ -17,8 +17,8 @@ namespace ABSIM {
   {
     SubDecayDescriptor*                       from_;
     std::vector<std::string>                  particles_;
-    std::vector<int_t>                          indices_;
-    std::map<int_t,SubDecayDescriptor*>         decays_;
+    std::vector<int_t>                        indices_;
+    std::map<int_t,SubDecayDescriptor*>       decays_;
 
     void addParticle(std::string name, int_t index)
     {
@@ -54,13 +54,13 @@ namespace ABSIM {
   class DecayDescriptor
   {
   private:
-    std::string                                       decay_;
-    std::string                                       head_;
-    std::vector<std::string>                          particles_;
-    std::vector<SubDecayDescriptor*>                  subdecays_;
+    std::string                       decay_;
+    std::string                       head_;
+    std::vector<std::string>          particles_;
+    std::vector<SubDecayDescriptor*>  subdecays_;
 
-    std::vector<BasicParticleInfo>                     particle_info_;
-    std::vector<DecayInfo>                             decay_info_;
+    std::vector<BasicParticleInfo>    particle_info_;
+    std::vector<DecayInfo>            decay_info_;
 
     // Decode Descriptor.
     void decodeDecay(std::string decay);

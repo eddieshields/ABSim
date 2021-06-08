@@ -29,6 +29,19 @@ namespace ABSIM {
     virtual std::unique_ptr<EntryBase> clone() const = 0;
   };
 
+
+  template <typename T>
+  inline std::string suffix() { return "i"; }
+
+  template <>
+  inline std::string suffix<int>() { return "I"; }
+
+  template <>
+  inline std::string suffix<float>() { return "F"; }
+
+  template <>
+  inline std::string suffix<double>() { return "D"; }
+
 }  // namespace ABSIM
 
 #endif

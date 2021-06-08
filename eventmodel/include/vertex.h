@@ -41,6 +41,10 @@ namespace ABSIM
       return *this;
     }
 
+    inline real_t X() { return x_; }
+    inline real_t Y() { return y_; }
+    inline real_t Z() { return z_; }
+
     // - operator is only one with a physical meaning.
     inline real_t operator-(const Vertex& rhs)
     {

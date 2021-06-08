@@ -17,31 +17,37 @@ namespace ABSIM {
     Sequence() = default;
     ~Sequence() {}
 
-
+  
     template <typename A>
-    void addAlgorithm(A* algo)
+    void addAlgorithm(const A& alg)
     {
-      algorithms_.add( algo );
+      addAlgorithm( &alg );
     }
 
     template <typename A>
-    void operator+(A* algo)
+    void addAlgorithm(A* alg)
     {
-      addAlgorithm( algo );;
+      algorithms_.add( alg );
     }
 
     template <typename A>
-    void operator+=(A* algo)
+    void operator+(A* alg)
     {
-      addAlgorithm( algo );
+      addAlgorithm( alg );;
+    }
+
+    template <typename A>
+    void operator+=(A* alg)
+    {
+      addAlgorithm( alg );
     }
 
     void operator()(Event& ev)
     {
-      Algorithm* algo = algorithms_.head().get();
-      while ( algo ) {
-        algo->operator()(ev);
-        algo = algo->next.get();
+      Algorithm* alg = algorithms_.head().get();
+      while ( alg ) {
+        alg->operator()(ev);
+        alg = alg->next.get();
       }
     }
   };
