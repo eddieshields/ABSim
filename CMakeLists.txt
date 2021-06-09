@@ -2,6 +2,7 @@
 cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 set(PACKAGE ABSIM)
 project(${PACKAGE})
+set(ABSIM_BASE ${CMAKE_CURRENT_SOURCE_DIR})
 
 #--- Options
 option(BUILD_TESTS "Build test programs" OFF)
@@ -36,21 +37,21 @@ set (CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
 #--- Add backend
-add_subdirectory(backend)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/backend)
 
 #--- Add common
-add_subdirectory(common)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/common)
 
 #--- Add eventmodel
-add_subdirectory(eventmodel)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/eventmodel)
 
 #--- Add algorithms
-add_subdirectory(algorithms)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/algorithms)
 
 #--- Add tupling
-add_subdirectory(tupling)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tupling)
 
-include_directories(include/)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
 #--- Tell CMake where to find ROOT.
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
@@ -78,7 +79,7 @@ target_include_directories(${PACKAGE} PUBLIC include backend/ common/include eve
 target_link_libraries(${PACKAGE} Backend Common EventModel Algorithms Tupling ${ROOT_LIBRARIES})
 
 #--- Create an executable
-add_executable(ABSimRun ${CMAKE_SOURCE_DIR}/main/src/ABSim.cpp)
+add_executable(ABSimRun ${CMAKE_CURRENT_SOURCE_DIR}/main/src/ABSim.cpp)
 target_link_libraries(ABSimRun ${PACKAGE})
 
 if ( BUILD_TESTS )

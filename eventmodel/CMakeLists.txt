@@ -5,4 +5,4 @@ find_package(ROOT REQUIRED COMPONENTS Core RooFit RooFitCore Tree MathCore Physi
 #--- Build EventModel library
 file(GLOB eventmodel_sources "src/*cpp")
 add_library(EventModel STATIC ${eventmodel_sources})
-target_include_directories(EventModel PUBLIC include ${CMAKE_SOURCE_DIR}/common/include ${ROOT_INCLUDE_DIRS})
+target_include_directories(EventModel PUBLIC include ${ABSIM_BASE}/common/include ${ROOT_INCLUDE_DIRS})
