@@ -14,6 +14,16 @@ using clock_r = std::chrono::time_point<std::chrono::high_resolution_clock>;
 
 namespace ABSIM {
 
+  /**
+   * @class Clock
+   * 
+   * @brief Class to perform timings of task.
+   * 
+   * @details 
+   * 
+   * @author Edward Shields
+   * @date 30/06/2021
+   */
   class Clock
   {
   private:
@@ -23,13 +33,21 @@ namespace ABSIM {
     static clock_r      t_end;
   
   public:
-    /** Start the clock */
+    /**
+     * Start the clock.
+     */
     static void Start();
-    /** Stop the clock */
+
+    /**
+     * Stop the clock.
+     */
     static void Stop();
-    /** Print timings.
+
+    /**
+     * Print the recorded time.
      * 
-     * \param task task that was completed. Will print "Time to task:" then timings. */
+     * @param task Task that was timed.
+     */
     static void Print(std::string task);
   };
 

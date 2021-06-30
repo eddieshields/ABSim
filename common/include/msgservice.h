@@ -30,6 +30,9 @@ namespace MSGSERVICE {
 
   namespace detail {
 
+    /**
+     * Trim a function name to remove the ABSIM namespace and virtual labels.
+     */
     inline std::string trimmedString( std::string thing, const unsigned int& length = FCNNAMELENGTH )
     {
       size_t pos2=0;
@@ -52,6 +55,9 @@ namespace MSGSERVICE {
       return thing.size() < length ? thing : thing.substr( 0, length ) + "...";
     }
     
+    /**
+     * Remove the path before the directory root for a file.
+     */
     inline std::string trimmedFile(std::string thing, const unsigned int& length = FCNNAMELENGTH)
     {
       size_t pos = 0;
@@ -60,6 +66,14 @@ namespace MSGSERVICE {
       return thing;
     }
 
+    /**
+     * @class NullBuffer
+     * 
+     * @brief Null bugger stream to stream debug info when it is deactivated.
+     * 
+     * @author Edward Shields
+     * @date 30/06/2021
+     */
     class NullBuffer : public std::streambuf
     {
     public:
