@@ -8,7 +8,7 @@ namespace ABSIM {
   /**
    * @class Entry
    * 
-   * @breif 
+   * @brief 
    * 
    * @details
    * 
@@ -27,11 +27,17 @@ namespace ABSIM {
      * @param name of entry.
      */
     Entry(std::string name) :
-      EntryBase(name,name)
+      EntryBase(name,name+suffix<T>())
     {}
     ~Entry() {}
 
   };
+
+  /**
+   * Returns suffix for branch title for a given type.
+   */
+  template <typename T>
+  std::string suffix();
 
 }  // namespace ABSIM
 

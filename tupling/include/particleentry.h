@@ -25,7 +25,7 @@ namespace ABSIM {
     const Fn&   fn_;     ///< Functor that is used to calculare the value of the entry from the particle.
     const int_t index_;  ///< Index of particle.
 
-    using return_type = typename std::result_of<Fn(Particle)>::type;
+    using T = typename std::result_of<Fn(Particle)>::type;
 
   public:
     /**
@@ -36,7 +36,7 @@ namespace ABSIM {
      * @param index Index of particle
      */ 
     ParticleEntry(Fn& fn, std::string name,int_t index) :
-      Entry<return_type>( name ),
+      Entry<T>( name ),
       fn_( fn ),
       index_( index )
     {}
