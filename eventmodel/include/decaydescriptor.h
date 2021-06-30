@@ -20,17 +20,11 @@ namespace ABSIM {
     std::vector<int_t>                        indices_;
     std::map<int_t,SubDecayDescriptor*>       decays_;
 
-    void addParticle(std::string name, int_t index)
-    {
-      particles_.push_back( name );
-      indices_.push_back( index );
-    }
-    void addDecay(int_t index, SubDecayDescriptor* decay)
-    {
-      decays_.insert( std::pair<int_t,SubDecayDescriptor*>( index , decay ) );
-    }
-    inline int_t                       size() const             { return static_cast<int_t>(particles_.size()); }
-    inline std::vector<std::string>& particles()              { return particles_; }
+    void addParticle(std::string name, int_t index);
+    void addDecay(int_t index, SubDecayDescriptor* decay);
+
+    inline int_t                     size() const { return static_cast<int_t>(particles_.size()); }
+    inline std::vector<std::string>& particles()  { return particles_; }
 
     friend std::ostream& operator<<(std::ostream& os, const SubDecayDescriptor& subdecay)
     {

@@ -10,13 +10,13 @@ namespace ABSIM {
   class CompositeEntry : public EntryBase
   {
   public:
-    const Fn&   fn_;
+    Fn    fn_;
     const int_t index1_;
     const int_t index2_;
     T           value_;
 
     CompositeEntry(const std::string name, const Fn& fn, const int_t index1, const int_t index2) :
-      EntryBase( name , name ),
+      EntryBase( name , get_title<T>(name) ),
       fn_( fn ),
       index1_( index1 ),
       index2_( index2 ),
@@ -39,11 +39,6 @@ namespace ABSIM {
     inline T operator()(Particle& particle)
     {
       return fn_( particle );
-    }
-
-    std::unique_ptr<EntryBase> clone() const override
-    {
-      return std::make_unique<CompositeEntry<Fn,T>>( *this );
     }
 
   };

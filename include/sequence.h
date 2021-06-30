@@ -52,7 +52,6 @@ namespace ABSIM {
     }
   };
 
-  extern Sequence gSequence;
 
 }  // namespace ABSIM
 

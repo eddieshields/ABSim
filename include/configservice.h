@@ -1,19 +1,21 @@
 #ifndef ABSIM_CONFIGSERVICE_H
 #define ABSIM_CONFIGSERVICE_H
 
-namespace ABSIM {
+#include "linkedlist.h"
+#include "algorithm.h"
+#include "entrybase.h"
+#include "sequence.h"
 
-  class ABSim;
+namespace ABSIM {
 
   class ConfigSvc
   {
   private:
-    const ABSim* target_;
+    Sequence algorithms_;
+    LinkedList<EntryBase> entries_;
 
   public:
-    ConfigSvc(const ABSim* target) :
-      target_( target )
-    {}
+    ConfigSvc() = default;
     ~ConfigSvc() {}
 
     template<typename Arg, typename... Args>

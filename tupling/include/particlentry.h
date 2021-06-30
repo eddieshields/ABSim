@@ -22,7 +22,7 @@ namespace ABSIM {
     T           value_;
 
     ParticleEntry(const std::string name, const int_t index) :
-      EntryBase( name , name ),
+      EntryBase( name , get_title<T>(name) ),
       index_( index ),
       value_( 0 )
     {}
@@ -41,11 +41,6 @@ namespace ABSIM {
     inline T operator()(Particle& particle)
     {
       return fn_( particle );
-    }
-
-    std::unique_ptr<EntryBase> clone() const override
-    {
-      return std::make_unique<ParticleEntry<Fn,T>>( *this );
     }
 
   };

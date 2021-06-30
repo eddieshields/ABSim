@@ -25,10 +25,7 @@ namespace ABSIM {
     const char* title() const { return title_.c_str(); }
 
     virtual void operator()(Event& ev) = 0;
-
-    virtual std::unique_ptr<EntryBase> clone() const = 0;
   };
-
 
   template <typename T>
   inline std::string suffix() { return "i"; }
@@ -41,6 +38,12 @@ namespace ABSIM {
 
   template <>
   inline std::string suffix<double>() { return "D"; }
+
+  template<typename T>
+  inline std::string get_title(std::string name)
+  {
+    return name+"/"+suffix<T>();
+  }
 
 }  // namespace ABSIM
 

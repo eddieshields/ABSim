@@ -17,11 +17,11 @@ namespace ABSIM {
   class Entry : public EntryBase
   {
   public:
-    Fn& fn_;
+    Fn fn_;
     T  value_;
 
     Entry(const std::string name, const Fn& fn) :
-      EntryBase( name , name ),
+      EntryBase( name , get_title<T>(name) ),
       fn_( fn ),
       value_( 0 )
     {}
@@ -35,11 +35,6 @@ namespace ABSIM {
     inline void operator()(Event& ev) override
     {
       this->value_ = fn_( ev.particle(0) );
-    }
-
-    std::unique_ptr<EntryBase> clone() const override
-    {
-      return std::make_unique<Entry<Fn,T>>( *this );
     }
 
   };

@@ -68,11 +68,12 @@ file(GLOB_RECURSE HEADERS include/*.h common/include/*h eventmodel/include/*h tu
 file(GLOB_RECURSE SOURCES src/*.cpp)
 
 #--- Generate library 
-#ROOT_GENERATE_DICTIONARY(G__${PACKAGE} ${HEADERS} LINKDEF dict/${PACKAGE}LinkDef.h)
+include_directories(include backend/ common/include eventmodel/include tupling/include algorithms/include)
+ROOT_GENERATE_DICTIONARY(G__${PACKAGE} ${HEADERS} LINKDEF dict/${PACKAGE}LinkDef.h)
 
 #--- Generate library with ROOT dictionary
-#add_library(${PACKAGE} STATIC ${SOURCES} ${} G__${PACKAGE}.cxx)
-add_library(${PACKAGE} SHARED ${SOURCES})
+add_library(${PACKAGE} STATIC ${SOURCES} ${} G__${PACKAGE}.cxx)
+#add_library(${PACKAGE} SHARED ${SOURCES})
 target_include_directories(${PACKAGE} PUBLIC include backend/ common/include eventmodel/include tupling/include)
 
 #--- Link libraries

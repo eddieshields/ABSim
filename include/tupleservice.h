@@ -20,24 +20,23 @@ namespace ABSIM {
     std::string name(demangled);
     delete demangled;
     int pos = name.find("ABSIM::");
-    return name.replace( pos , 7 , "" );
+    if ( pos != std::string::npos ) name.replace( pos , 7 , "" );
+    return name;
   }
 
   class ABSim;
 
   class TupleSvc
   {
-  private:
-    const ABSim* target_;
-
   public:
-    TupleSvc(const ABSim* target) :
-      target_( target )
-    {}
+    TupleSvc() = default;
     ~TupleSvc() {}
 
     template <typename Fn>
-    void addEntry(std::string name, const Fn& fn, int_t index);
+    void addEntry(const Fn& fn, int_t index);
+
+    template <typename Fn>
+    std::string generateName(const int_t index) const;
 
     template <typename Fn>
     void addFunction()

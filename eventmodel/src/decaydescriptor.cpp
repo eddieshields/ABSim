@@ -2,6 +2,17 @@
 
 using namespace ABSIM;
 
+void SubDecayDescriptor::addParticle(std::string name, int_t index)
+{
+  particles_.push_back( name );
+  indices_.push_back( index );
+}
+
+void SubDecayDescriptor::addDecay(int_t index, SubDecayDescriptor* decay)
+{
+  decays_.insert( std::pair<int_t,SubDecayDescriptor*>( index , decay ) );
+}
+
 void DecayDescriptor::getParticleInfo(std::string name, bool decay_particle)
 {
   BasicParticleInfo info = ParticleStore::getParticle( name );
