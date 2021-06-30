@@ -28,36 +28,13 @@ namespace ABSIM {
       tree_ = new TTree(name.c_str(),title.c_str());
     }
 
-    void addParticleEntry(std::string name, std::string variable, unsigned int i);
-
     template <typename Fn>
-    void addEntry(std::string name)
-    {
-      ParticleEntry<Fn,real_t>* entry =  new ParticleEntry<Fn,real_t>(name,0);
-      tree_->Branch(entry->name(),&entry->value_,entry->title());
-      entries_.add( entry );
-    }
+    void addEntry(const Fn& fn, const std::string name);
 
-    template <typename ENTRY>
-    void addEntry(ENTRY* entry)
-    {
-      tree_->Branch(entry->name(),&entry->value_,entry->title());
-      entries_.add( entry );
-    }
-
-    void fill(Event& ev)
-    {
-      EntryBase* entry = entries_.head().get();
-      while ( entry ) {
-        entry->operator()(ev);
-        entry = entry->next.get();
-      }
-      tree_->Fill();
-    }
-
-    TTree* tree() { return tree_; }
-
+    void fill();
+    
   };
+
 
 } // namespace ABSIM
 

@@ -2,43 +2,37 @@
 #define ABSIM_ENTRY_H
 
 #include "entrybase.h"
-#include "properties.h"
-#include "types.h"
-#include "event.h"
-#include "functors.h"
-
-#include <string>
-#include <functional>
-#include <memory>
 
 namespace ABSIM {
 
-  template <typename Fn, typename T>
+  /**
+   * @class Entry
+   * 
+   * @breif 
+   * 
+   * @details
+   * 
+   * @author Edward Shields
+   * @date 30/06/2021
+   */
+  template <typename T>
   class Entry : public EntryBase
   {
   public:
-    Fn fn_;
-    T  value_;
+    T value; ///< Value, where the address of this will be used to fill the TTree.
 
-    Entry(const std::string name, const Fn& fn) :
-      EntryBase( name , get_title<T>(name) ),
-      fn_( fn ),
-      value_( 0 )
-    {}
-    Entry(const Entry<Fn,T>& rhs) :
-      EntryBase( rhs.name_ , rhs.title_ ),
-      fn_( rhs.fn_ ),
-      value_( rhs.value_ )
+    /**
+     * Constructor
+     * 
+     * @param name of entry.
+     */
+    Entry(std::string name) :
+      EntryBase(name,name)
     {}
     ~Entry() {}
 
-    inline void operator()(Event& ev) override
-    {
-      this->value_ = fn_( ev.particle(0) );
-    }
-
   };
 
-} // namespace ABSIM
+}  // namespace ABSIM
 
 #endif

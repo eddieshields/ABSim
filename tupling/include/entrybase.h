@@ -7,43 +7,53 @@
 #include <memory>
 
 namespace ABSIM {
-  
-  struct EntryBase
+
+  /**
+   * @class EntryBase
+   * 
+   * @brief Abstract base class for an entry.
+   * 
+   * @details
+   * 
+   * @author Edward Shields
+   * @data 20/06/2021 
+   */
+  class EntryBase
   {
-    EntryBase(std::string name, std::string title) :
-      next( nullptr ),
+  private:
+    const std::string name_;    ///< Name of branch.
+    const std::string title_;   ///< Title of branch.
+  public:
+    /**
+     * Constructor
+     * 
+     * @param name Name of branch.
+     * @param title Title of branch.
+     */
+    EntryBase(const std::string name, const std::string title) :
       name_( name ),
-      title_( title )
+      title_( title)
     {}
-    virtual ~EntryBase() {}
 
-    std::unique_ptr<EntryBase> next;
+    std::unique_ptr<EntryBase> next; ///< Next entry in LinkedList.
 
-    const std::string name_;
-    const std::string title_;
-    const char* name()  const { return name_.c_str(); }
-    const char* title() const { return title_.c_str(); }
+    /** 
+     * Name of branch.
+     */
+    const std::string name()  const { return name_; }
+    /**
+     * Title of branch.
+     */
+    const std::string title() const { return title_; }
 
+    /**
+     * Virtual function in which a value is assigned to the address of the branch.
+     * The value of this address is the looked at when the TTree is filled.
+     * 
+     * @param ev Event
+     */
     virtual void operator()(Event& ev) = 0;
   };
-
-  template <typename T>
-  inline std::string suffix() { return "i"; }
-
-  template <>
-  inline std::string suffix<int>() { return "I"; }
-
-  template <>
-  inline std::string suffix<float>() { return "F"; }
-
-  template <>
-  inline std::string suffix<double>() { return "D"; }
-
-  template<typename T>
-  inline std::string get_title(std::string name)
-  {
-    return name+"/"+suffix<T>();
-  }
 
 }  // namespace ABSIM
 

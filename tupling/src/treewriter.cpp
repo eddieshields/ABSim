@@ -2,8 +2,8 @@
 
 using namespace ABSIM;
 
-void TreeWriter::addParticleEntry(std::string name, std::string variable, unsigned int i)
+template <typename Fn>
+void TreeWriter::addEntry(const Fn& fn, const std::string name)
 {
-  std::string entry_name = "_" + name + "_" + variable + "_";
-  addEntry<M2>(name);
+
 }
