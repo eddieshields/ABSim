@@ -2,6 +2,16 @@
 
 using namespace ABSIM;
 
+void Decay::construct(Particle* particles, const DecayInfo& info)
+    {
+      mother_ = particles + info.mother;
+      ndaughters_ = info.ndaughters;
+      for(int_t i = 0; i < info.ndaughters; i++) {
+        daughters_[i] = particles + info.daughters[i];
+      }
+      setDecay();
+    }
+
 void Decay::setDecay()
 {
   std::vector<real_t> masses;

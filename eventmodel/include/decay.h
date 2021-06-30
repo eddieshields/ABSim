@@ -13,9 +13,11 @@ namespace ABSIM {
   const int_t MAXP_ = 18;
 
   /**
-   * Decay
+   * @class Decay
    * 
-   * Class to represent the decay of a particle int_to N other particles.
+   * @brief Class to represent the decay of a particle int_to N other particles.
+   * 
+   * @details
    * 
    * @author Edward Shields
    * @date 11/05/2021
@@ -23,33 +25,49 @@ namespace ABSIM {
   class Decay {
   friend class Event;
   private:
-    Particle* mother_;
-    Particle* daughters_[MAXP_];
-    int_t     ndaughters_;
+    Particle* mother_;                  ///< Pointer to mother particle
+    Particle* daughters_[MAXP_];        ///< Array of pointers to daughter particles.
+    int_t     ndaughters_;              ///< Number of daughters.
 
-    GenPhaseSpace          generator_;
+    GenPhaseSpace          generator_;  ///< Phasespace generator.
 
   public:
     static std::string NAME() { return "Decay"; }
+
+    /**
+     * Constructor.
+     */
     Decay() {}
     ~Decay() {}
 
-    inline void construct(Particle* particles, const DecayInfo& info)
-    {
-      mother_ = particles + info.mother;
-      ndaughters_ = info.ndaughters;
-      for(int_t i = 0; i < info.ndaughters; i++) {
-        daughters_[i] = particles + info.daughters[i];
-      }
-      setDecay();
-    }
+    /**
+     * Construct the decay.
+     * 
+     * @param particles Array of particles from Event
+     * @param info Info about decay
+     */
+    void construct(Particle* particles, const DecayInfo& info);
 
+    /**
+     * Set decay so the generator is pointing to the correct particles.
+     */
     void setDecay();
 
+    /**
+     * Generate a decay with a phasespace distribution.
+     */
     void generateDecay();
 
+    /**
+     * Return pointer to mother particle.
+     */
     Particle* mother() { return mother_; }
 
+    /**
+     * Return pointer to daughter particle by index.
+     * 
+     * @param i Index of particle
+     */
     Particle* daughter(const int_t& i)
     { 
       if ( i > ndaughters_ ) warning() << "Bad index " << i << endmsg;

@@ -12,26 +12,49 @@
 
 namespace ABSIM {
 
+  /**
+   * @class Particle
+   * 
+   * @brief
+   * 
+   * @details
+   * 
+   * @author Edward Shields
+   * @date 30/06/2021
+   */
   class Particle
   {
   friend class Decay;
   friend class Event;
   private:
-    ParticleProperty<FourVector> momentum_;
-    ParticleProperty<Vertex>     org_vertex_;
-    ParticleProperty<Vertex>     end_vertex_;
-    std::string                  name_;
-    ParticleProperty<real_t>     mass_;
-    ParticleProperty<real_t>     time_;
-    ParticleProperty<int_t>      pid_;
-    ParticleProperty<int_t>      q_;
+    ParticleProperty<FourVector> momentum_;    ///< Four momentum.
+    ParticleProperty<Vertex>     org_vertex_;  ///< Origin vertex.
+    ParticleProperty<Vertex>     end_vertex_;  ///< Decay vertex.
+    std::string                  name_;        ///< PDG name.
+    ParticleProperty<real_t>     mass_;        ///< Mass.
+    ParticleProperty<real_t>     time_;        ///< Decay time.
+    ParticleProperty<int_t>      pid_;         ///< PDG PID code.
+    ParticleProperty<int_t>      q_;           ///< Charge.
 
-    bool                         stable_;
-    int_t                        decay_index_;
+    bool                         stable_;      ///< Is stable.
+    int_t                        decay_index_; ///< Index of particle in event.
 
   public:
     static std::string NAME() { return "Particle"; }
+    /**
+     * Constructor.
+     */
     Particle() = default;
+
+    /**
+     * Constructor
+     * 
+     * @param name PDG name
+     * @param mass Mass
+     * @param time Decay time
+     * @param pid PDG PID code
+     * @param q Charge
+     */
     Particle(std::string name, real_t mass, real_t time, int_t pid, int_t q) :
       momentum_(),
       org_vertex_(),
@@ -42,6 +65,10 @@ namespace ABSIM {
       pid_( pid ),
       q_( q )
     {}
+
+    /**
+     * Copy constructor.
+     */
     Particle(const Particle& rhs) :
       momentum_( rhs.momentum_ ),
       org_vertex_( rhs.org_vertex_ ),
@@ -54,6 +81,12 @@ namespace ABSIM {
       stable_( rhs.stable_ ),
       decay_index_( rhs.decay_index_ )
     {}
+
+    /**
+     * Constructor
+     * 
+     * @param info BasicParticleInfo container
+     */
     Particle(const BasicParticleInfo& info) :
       momentum_(),
       org_vertex_(),
@@ -68,6 +101,9 @@ namespace ABSIM {
     {}
     ~Particle() {}
 
+    /**
+     * Move operator
+     */
     Particle& operator=(const Particle& rhs)
     {
       momentum_ = rhs.momentum_;
@@ -82,6 +118,10 @@ namespace ABSIM {
       decay_index_ = rhs.decay_index_;
       return *this;
     }
+
+    /**
+     * Create particle from BasicParticleInfo.
+     */
     Particle& operator=(const BasicParticleInfo& rhs)
     {
       name_ = rhs.name;
@@ -94,8 +134,14 @@ namespace ABSIM {
       return *this;
     }
 
+    /**
+     * Returns name of particle.
+     */
     const std::string name() const { return name_; };
 
+    /**
+     * Construct particle from BasicParticleInfo.
+     */
     inline void construct(const BasicParticleInfo& info)
     {
       name_ = info.name;
@@ -107,6 +153,9 @@ namespace ABSIM {
       decay_index_ = info.decay_index;
     }
 
+    /**
+     * Reset generated variables.
+     */
     void reset()
     {
       momentum_ = FourVector();
@@ -114,14 +163,13 @@ namespace ABSIM {
       end_vertex_ = Vertex();
     }
 
-    inline ParticleProperty<FourVector>& momentum()   { return momentum_; }
-    inline ParticleProperty<Vertex>&     org_vertex() { return org_vertex_; }
-    inline ParticleProperty<Vertex>&     end_vertex() { return end_vertex_; }
-    inline std::string&                  name()       { return name_; }
-    inline ParticleProperty<real_t>&     mass()       { return mass_; }
-    inline ParticleProperty<real_t>&     time()       { return time_; }
-    inline ParticleProperty<int_t>&      pid()        { return pid_; }
-    inline ParticleProperty<int_t>&      q()          { return q_; }
+    inline ParticleProperty<FourVector>& momentum()   { return momentum_; }        //!< Return Four momentum
+    inline ParticleProperty<Vertex>&     org_vertex() { return org_vertex_; }      //!< Return Origin vertex
+    inline ParticleProperty<Vertex>&     end_vertex() { return end_vertex_; }      //!< Return Decay vertex        
+    inline ParticleProperty<real_t>&     mass()       { return mass_; }            //!< Return mass
+    inline ParticleProperty<real_t>&     time()       { return time_; }            //!< Return decay time
+    inline ParticleProperty<int_t>&      pid()        { return pid_; }             //!< Return PID
+    inline ParticleProperty<int_t>&      q()          { return q_; }               //!< Return charge
 
     inline FourVector& momentum(Property::Type type)   { return momentum_(type); }
     inline Vertex&     org_vertex(Property::Type type) { return org_vertex_(type); }
@@ -132,6 +180,9 @@ namespace ABSIM {
     inline int_t&      q(Property::Type type)          { return q_(type); }
 
 
+    /**
+     * Calculates flight distance of the particle.
+     */
     real_t FD() { return end_vertex_.generated() - org_vertex_.generated(); }
 
   };
